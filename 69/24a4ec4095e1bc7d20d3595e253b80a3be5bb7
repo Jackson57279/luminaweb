@@ -1,0 +1,313 @@
+apps/edge/src/index.ts
+  d03d17d190f0d4b6 1-113
+packages/runtime/package.json
+  d550f4a4fe222965 1-25
+README.md
+  21f4eb56a20f2430 1-57
+.dockerignore
+  21f4eb56a20f2430 1-44
+packages/runtime/src/server/handler.ts
+  1b5b0860cd1757a9 1-161,164-212
+  23d089590f5fa6bc 162-163
+Dockerfile
+  8d9a81f806d1a64f 68-69
+  13531174da14b728 29-32
+  s_e338900f93adf7::t_ba2870310d2212 151-163
+  ed60c95b1e01ca2c 87,91-93
+  ee1e346a028f3845 89
+  21f4eb56a20f2430 1-28,33-66,128-150
+  fba33346c04b11d1 94
+  9c03cab52a9da695 67,70-74,76-81,84-86,88,90,95-127
+  2d03a3bdc7ea1fa8 83
+  9dc43357f6a63027 75,82
+apps/web/package.json
+  s_e338900f93adf7::t_b731d7b9ba808b 2-12
+railway.json
+  21f4eb56a20f2430 1-5,7-8,12-22
+  s_e338900f93adf7::t_3a68173224b8c0 6,9-10
+  d4941ac844b793dc 11
+bunfig.toml
+  21f4eb56a20f2430 1-6
+.gitignore
+  21f4eb56a20f2430 1-23
+  s_e338900f93adf7::t_145330064725c2 24
+packages/cli/src/commands/build.ts
+  95a6e8810104dc03 1-129
+tsconfig.json
+  21f4eb56a20f2430 1-22
+package.json
+  21f4eb56a20f2430 1,3-31
+  s_e338900f93adf7::t_62fd0428c0a5a5 2
+apps/web/public/favicon.svg
+  s_e338900f93adf7::t_3bdbf2a0a59830 3
+apps/web/public/style.css
+  s_e338900f93adf7::t_ddb74118addc40 2
+examples/counter/client/index.tsx
+  05aee9151c517561 1-75
+apps/web/server.ts
+  s_e338900f93adf7::t_09243f6afefe20 2,97,190,223,324,369,397-399,427-435,479,605,653,696,716,755,768,819,833,835,843-856,858,862-879,915
+  s_e338900f93adf7::t_1ed149309b3aa4 50,123-161,200-213,235-255,333-352,408-420,454-472,500-540,566-589,624-638,672-678,682-689,717-747,778-791,836,859
+  s_e338900f93adf7::t_b0a86ec65c8e58 162,370,436,480,548,606,642,654,679,697,756,820,834,857,880-889,922
+  s_e338900f93adf7::t_706af06b110c7d 166
+examples/counter/server/index.ts
+  3da61392ef656205 1-49
+packages/runtime/src/client/index.tsx
+  058e351bff703f93 1-314
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "6924a4ec4095e1bc7d20d3595e253b80a3be5bb7",
+  "prompts": {
+    "058e351bff703f93": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-db9b23e9-e49a-47c6-8311-ff3f8ab3b43b",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 314,
+      "total_deletions": 0,
+      "accepted_lines": 314,
+      "overriden_lines": 0
+    },
+    "05aee9151c517561": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-4f134d01-3ac9-4185-89da-ef45cd851ada",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 75,
+      "total_deletions": 0,
+      "accepted_lines": 75,
+      "overriden_lines": 0
+    },
+    "13531174da14b728": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-cde793ca-664f-48d1-87b4-aeb038dde641",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 4,
+      "total_deletions": 2,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "18f82352d8edc49e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-edbd394e-178a-4731-a8fc-4f98200773b2",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "1b5b0860cd1757a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-4bf8f992-647c-449a-be62-55cf3ca74478",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 211,
+      "total_deletions": 0,
+      "accepted_lines": 210,
+      "overriden_lines": 0
+    },
+    "21f4eb56a20f2430": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-d63c2bc2-a56a-450d-a3c7-24c2d1412859",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 297,
+      "total_deletions": 0,
+      "accepted_lines": 285,
+      "overriden_lines": 0
+    },
+    "23d089590f5fa6bc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-a0a918f4-6a4c-455f-b68e-d69345d9d743",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 2,
+      "total_deletions": 1,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "2d03a3bdc7ea1fa8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-0271f51e-5ec7-4deb-9f9c-030dd915dcc5",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "3da61392ef656205": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-428cedf7-798d-48a7-8cc0-a7f95b9fc3a3",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 49,
+      "total_deletions": 0,
+      "accepted_lines": 49,
+      "overriden_lines": 0
+    },
+    "8d9a81f806d1a64f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-25c4c3f5-3d97-4971-9dbf-09a1cd4722f7",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 2,
+      "total_deletions": 3,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "95a6e8810104dc03": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-43e2e839-099b-45b4-a256-e25f9f8ad3b4",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 129,
+      "total_deletions": 0,
+      "accepted_lines": 129,
+      "overriden_lines": 0
+    },
+    "9c03cab52a9da695": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-27912239-2479-4c04-8b85-e23b8c536d62",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 59,
+      "total_deletions": 2,
+      "accepted_lines": 50,
+      "overriden_lines": 0
+    },
+    "9dc43357f6a63027": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-3bff188b-549c-44e0-a4ff-3d67d6d2ed6c",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    },
+    "d03d17d190f0d4b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-af174f57-7adc-4314-9bf5-db48ef378812",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 113,
+      "total_deletions": 0,
+      "accepted_lines": 113,
+      "overriden_lines": 0
+    },
+    "d4941ac844b793dc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-ff2b2918-47bc-490a-8a31-84df1f97cd24",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "d550f4a4fe222965": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-aaf2dc37-c18d-420d-a7ed-b5d81067ee0b",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 25,
+      "total_deletions": 0,
+      "accepted_lines": 25,
+      "overriden_lines": 0
+    },
+    "dd38184d827f4ea9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-2fcafa59-3701-43ff-a7be-af45a710385c",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "ed60c95b1e01ca2c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-f0617bb2-560e-4b8d-b8b1-d0abace5ab88",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 4,
+      "total_deletions": 3,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    },
+    "ee1e346a028f3845": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-f790c0b9-76cf-48aa-8957-2311cadc7c12",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "fba33346c04b11d1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "opencode-transcript-ses_17d9186f5ffeulOm4Yawk01E6y-1736cf9c-905f-4b15-a128-13b517c72a1c",
+        "model": "unknown"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>",
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  },
+  "sessions": {
+    "s_e338900f93adf7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2c7682ad-de36-4ca7-87d1-41c71eed57ef",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
