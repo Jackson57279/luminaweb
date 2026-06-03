@@ -1,0 +1,44 @@
+# Bun / oven image
+.git
+.github
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose*.yml
+Dockerfile.*
+
+# Node / Bun caches
+node_modules
+.bun
+bun.lock
+bun.lockb
+.turbo
+.cache
+*.tsbuildinfo
+coverage
+
+# Build outputs
+apps/*/dist
+packages/*/dist
+examples/*/dist
+
+# Env, secrets, runtime state
+.env
+.env.*
+!.env.example
+.env.zapdev.server
+examples/*/.env.zapdev.server
+.zapdev
+.lakebed
+.railway
+.vercel
+.netlify
+
+# Logs and editor cruft
+*.log
+.DS_Store
+.idea
+.vscode
+data
+*.sqlite
+*.sqlite-journal

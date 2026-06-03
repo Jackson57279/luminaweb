@@ -1,0 +1,14 @@
+{
+  "name": "@luminaweb/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot server.ts",
+    "build": "bun build server.ts --target=bun --outdir=dist --minify",
+    "start": "bun server.ts"
+  },
+  "dependencies": {
+    "@luminaweb/runtime": "workspace:*"
+  }
+}

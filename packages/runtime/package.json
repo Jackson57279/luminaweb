@@ -1,0 +1,25 @@
+{
+  "name": "@zapdev/runtime",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server/index.ts",
+    "./server/sqlite": "./src/server/sqlite.ts",
+    "./server/memory": "./src/server/memory.ts",
+    "./server/handler": "./src/server/handler.ts",
+    "./server/auth": "./src/server/auth.ts",
+    "./server/log": "./src/server/log.ts",
+    "./client": "./src/client/index.tsx",
+    "./shared": "./src/shared/index.ts"
+  },
+  "dependencies": {
+    "preact": "^10.24.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

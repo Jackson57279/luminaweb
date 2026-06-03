@@ -1,0 +1,14 @@
+{
+  "name": "guestbook-capsule",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "zapdev dev",
+    "build": "zapdev build --target edge",
+    "deploy": "zapdev deploy"
+  },
+  "dependencies": {
+    "@zapdev/runtime": "workspace:*"
+  }
+}

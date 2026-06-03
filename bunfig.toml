@@ -1,0 +1,6 @@
+[install]
+# Use the exact Bun version we ship in the Dockerfile.
+exact = false
+
+[install.cache]
+disable = false
