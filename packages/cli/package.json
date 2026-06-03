@@ -25,9 +25,6 @@
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {
-    "@luminaweb/runtime": "workspace:*"
-  },
   "devDependencies": {
     "typescript": "^5.6.3"
   }
