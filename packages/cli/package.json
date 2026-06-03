@@ -1,19 +1,32 @@
 {
-  "name": "zapdev",
+  "name": "luminaweb",
   "version": "0.1.0",
+  "description": "Agent-native runtime for full-stack TypeScript apps. Ship the thing. Skip the plumbing.",
   "type": "module",
-  "main": "./src/index.ts",
   "bin": {
-    "zapdev": "./src/index.ts"
+    "luminaweb": "./bin/luminaweb.js"
   },
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "files": [
+    "bin/",
+    "dist/",
+    "src/"
+  ],
   "scripts": {
-    "dev": "bun --watch src/index.ts"
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --target=bun --outfile=dist/index.js --minify"
+  },
+  "keywords": ["capsule", "runtime", "typescript", "fullstack", "bun", "luminaweb"],
+  "homepage": "https://luminaweb.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jackson57279/luminaweb"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
-    "@zapdev/runtime": "workspace:*"
+    "@luminaweb/runtime": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.6.3"

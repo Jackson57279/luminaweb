@@ -1,16 +1,14 @@
 /* =====================================================================
    Luminaweb marketing site.
-   ---------------------------------------------------------------------
-   Server-rendered HTML (no React) served by a single Bun process.
-   Vibe: Ethereal Glass + Editorial Split. Accent: electric lime.
-   Type: Geist Sans + Geist Mono. No Inter. No cards-overload.
+   Server-rendered HTML served by a single Bun process.
+   Design: Premium Utilitarian Minimalism · Warm Monochrome
+   Type: Instrument Serif (display) + Geist (body) + Geist Mono (code)
    ===================================================================== */
 
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const PORT = Number(process.env.PORT ?? 3000);
-const DIST = join(import.meta.dir, "dist");
 const PUBLIC_DIR = join(import.meta.dir, "public");
 
 const PAGES: Record<string, Page> = {
@@ -49,6 +47,10 @@ const server = Bun.serve({
 
 console.log(`[luminaweb-web] marketing on http://localhost:${server.port}`);
 
+/* ------------------------------------------------------------------ */
+/*  Response helpers                                                    */
+/* ------------------------------------------------------------------ */
+
 function textResponse(body: string, status = 200, extra: Record<string, string> = {}): Response {
   return new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8", ...extra } });
 }
@@ -78,7 +80,7 @@ function readPublic(name: string): string | null {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Shared layout                                                      */
+/*  Shared layout                                                       */
 /* ------------------------------------------------------------------ */
 
 function page(opts: {
@@ -101,44 +103,53 @@ function page(opts: {
   <meta property="og:description" content="${escape(opts.description)}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${escape(opts.canonical)}" />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#FBFBFA" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://rsms.me/" />
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="/style.css" />
   <style>${css}</style>
 </head>
 <body>
 ${SHELL(opts.pathname, opts.body)}
+<script>
+(function(){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>`;
 }
 
 const SHELL = (pathname: string, body: string) => `
   <a class="skip" href="#main">Skip to content</a>
-  <header class="nav" data-pad="lg">
+  <header class="nav">
     <div class="nav__inner">
       <a class="nav__brand" href="/">
-        <span class="nav__bolt">▌</span>
-        <span class="nav__word">luminaweb</span>
-        <span class="nav__pill">[alpha]</span>
+        luminaweb
+        <span class="nav__tag">alpha</span>
       </a>
       <nav class="nav__links" aria-label="Primary">
         <a href="/docs" ${pathname.startsWith("/docs") ? 'data-current="true"' : ""}>Docs</a>
         <a href="/examples" ${pathname === "/examples" ? 'data-current="true"' : ""}>Examples</a>
         <a href="/playground" ${pathname === "/playground" ? 'data-current="true"' : ""}>Playground</a>
         <a href="/docs/deploy" ${pathname === "/docs/deploy" ? 'data-current="true"' : ""}>Deploy</a>
-        <a class="nav__cta" href="/docs/quickstart">Quickstart <span aria-hidden="true">→</span></a>
       </nav>
+      <a class="nav__cta" href="/docs/quickstart">Get started</a>
     </div>
   </header>
   <main id="main" class="main">${body}</main>
   <footer class="foot">
     <div class="foot__inner">
       <div class="foot__brand">
-        <span class="nav__bolt">▌</span>
-        <span class="nav__word">luminaweb</span>
-        <span class="foot__tag">an agent-native runtime for full-stack TypeScript apps.</span>
+        luminaweb
+        <span class="foot__sub">An agent-native runtime for full-stack TypeScript apps.</span>
       </div>
       <div class="foot__cols">
         <div>
@@ -171,72 +182,77 @@ const SHELL = (pathname: string, body: string) => `
 `;
 
 /* ------------------------------------------------------------------ */
-/*  Pages                                                              */
+/*  Pages                                                               */
 /* ------------------------------------------------------------------ */
 
 async function home(_req: Request): Promise<Response> {
   const body = `
     <section class="hero">
-      <div class="hero__left">
-        <span class="eyebrow">
-          <span class="eyebrow__dot"></span>
-          alpha · v0.1.0 · running on Bun
-        </span>
-        <h1 class="hero__title">
-          <span class="hero__line"><span class="accent">Ship</span> the thing.</span>
-          <span class="hero__line">Skip the <span class="accent">plumbing</span>.</span>
+      <div class="hero__ambient"><div class="hero__blob"></div></div>
+      <div class="hero__content">
+        <div class="hero__meta reveal">
+          <span class="tag tag--green"><span class="tag__dot"></span>alpha · v0.1.0</span>
+          <span class="hero__meta-text">built on Bun · deployed on Railway Edge</span>
+        </div>
+        <h1 class="hero__title reveal reveal-d1">
+          Ship the thing.<br/><em>Skip the plumbing.</em>
         </h1>
-        <p class="hero__sub">
+        <p class="hero__sub reveal reveal-d2">
           Luminaweb is an agent-native runtime for full-stack TypeScript apps called
-          <em>capsules</em>. One directory, one port, one command. <span class="hero__strike">No docker.</span> <span class="hero__strike">No yaml.</span> <span class="hero__strike">No 3am deploys.</span>
+          <strong>capsules</strong>. One directory, one port, one command.
+          <del>No docker.</del> <del>No yaml.</del> <del>No 3am deploys.</del>
         </p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="/docs/quickstart">
-            <span>Install the CLI</span>
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="btn btn--ghost" href="/playground">Open the playground</a>
+        <div class="hero__actions reveal reveal-d3">
+          <a class="btn btn--primary btn--lg" href="/docs/quickstart">Read the quickstart</a>
+          <a class="btn btn--ghost btn--lg" href="/playground">Try the playground</a>
         </div>
-        <pre class="terminal" aria-label="Quick start"><code><span class="t-prompt">$</span> <span class="t-cmd">npm i -g luminaweb</span>
+        <div class="reveal reveal-d4">
+          <div class="terminal" aria-label="Quick start">
+            <div class="terminal__bar">
+              <span class="terminal__dot"></span>
+              <span class="terminal__dot"></span>
+              <span class="terminal__dot"></span>
+            </div>
+            <div class="terminal__body">
+              <code><span class="t-prompt">$</span> <span class="t-cmd">npm i -g luminaweb</span>
 <span class="t-prompt">$</span> <span class="t-cmd">luminaweb new my-app --template todo</span>
-<span class="t-prompt">$</span> <span class="t-cmd">cd my-app && luminaweb dev</span>
-<span class="t-out">▌ ready on http://localhost:3000 · 14ms cold start</span></code></pre>
-      </div>
-      <aside class="hero__right" aria-hidden="true">
-        <div class="orb orb--a"></div>
-        <div class="orb orb--b"></div>
-        <div class="orb orb--c"></div>
-        <div class="hero__chip hero__chip--1">
-          <span class="hero__chip-dot"></span> capsule built
+<span class="t-prompt">$</span> <span class="t-cmd">cd my-app &amp;&amp; luminaweb dev</span>
+<span class="t-out">▌ ready on http://localhost:3000 · 14ms cold start</span></code>
+            </div>
+          </div>
         </div>
-        <div class="hero__chip hero__chip--2">9.2 kB client bundle</div>
-        <div class="hero__chip hero__chip--3">luminaweb deploy 4.6s</div>
-      </aside>
+      </div>
     </section>
 
     <section class="band">
       <div class="band__inner">
-        <span class="band__pill">what is it</span>
-        <h2 class="band__title">An agent-native runtime.<br/><span class="dim">Not a meta-framework.</span></h2>
-        <p class="band__body">
-          You write a <code>capsule()</code> with a schema, queries, mutations, and a Preact UI.
-          Luminaweb handles the rest: server authority, routing, persistence, deploys, the boring parts.
-          The runtime is small enough to read in a sitting. It stays out of your way.
-        </p>
+        <div class="reveal">
+          <h2 class="band__title">An agent-native<br/><em>runtime.</em></h2>
+        </div>
+        <div class="band__body reveal reveal-d1">
+          <p>
+            You write a <code>capsule()</code> with a schema, queries, mutations, and a Preact UI.
+            Luminaweb handles the rest: server authority, routing, persistence, deploys, the boring parts.
+          </p>
+          <p>
+            The runtime is small enough to read in a sitting. It stays out of your way.
+            No framework churn, no opinion on your folder structure.
+          </p>
+        </div>
       </div>
     </section>
 
     <section class="split">
-      <div class="split__copy">
-        <span class="eyebrow eyebrow--dark">file layout</span>
-        <h2>Three files.<br/>That's the whole app.</h2>
+      <div class="split__copy reveal">
+        <h2>Three files.<br/><em>That's the whole app.</em></h2>
         <p>
           The capsule lives in one directory. A server contract, a Preact client, a
           <code>shared/</code> folder for types, and an optional <code>.env.luminaweb.server</code>
           for secrets. No build config. No router config. No bundler config.
         </p>
       </div>
-      <pre class="tree"><code>my-app/
+      <div class="reveal reveal-d1">
+        <div class="tree"><code>my-app/
 ├── server/
 │   └── index.ts       <span class="dim">// capsule, schema, queries, mutations</span>
 ├── client/
@@ -244,15 +260,22 @@ async function home(_req: Request): Promise<Response> {
 ├── shared/
 │   └── todo.ts        <span class="dim">// pure types &amp; helpers</span>
 ├── .env.luminaweb.server <span class="dim">// server-only secrets</span>
-└── package.json</code></pre>
+└── package.json</code></div>
+      </div>
     </section>
 
-    <section class="code">
+    <div class="code reveal">
       <div class="code__head">
+        <div class="code__circles">
+          <span class="code__circle"></span>
+          <span class="code__circle"></span>
+          <span class="code__circle"></span>
+        </div>
         <span class="code__file">server/index.ts</span>
         <span class="code__lang">TypeScript</span>
       </div>
-      <pre class="code__body"><code><span class="kw">import</span> { <span class="sym">boolean, capsule, mutation, query, string, table</span> } <span class="kw">from</span> <span class="str">"@luminaweb/runtime/server"</span>;
+      <div class="code__body">
+        <code><span class="kw">import</span> { <span class="sym">boolean, capsule, mutation, query, string, table</span> } <span class="kw">from</span> <span class="str">"@luminaweb/runtime/server"</span>;
 
 <span class="kw">export default</span> <span class="fn">capsule</span>({
   schema: {
@@ -272,17 +295,18 @@ async function home(_req: Request): Promise<Response> {
       ctx.db.todos.insert({ text, done: <span class="kw">false</span>, ownerId: ctx.auth.userId });
     }),
   },
-});</code></pre>
-    </section>
+});</code>
+      </div>
+    </div>
 
     <section class="features">
-      <div class="features__intro">
-        <span class="eyebrow eyebrow--dark">why it works</span>
-        <h2>Built for the <span class="accent">agent</span>,<br/> not the framework.</h2>
+      <div class="features__intro reveal">
+        <p class="features__eyebrow">why it works</p>
+        <h2>Built for the agent,<br/><em>not the framework.</em></h2>
       </div>
       <div class="features__grid">
-        <article class="feat">
-          <span class="feat__num">01</span>
+        <article class="feat reveal reveal-d1">
+          <p class="feat__num">01</p>
           <h3>Server-authoritative</h3>
           <p>
             Queries and mutations are the source of truth. The client never writes to tables.
@@ -290,48 +314,44 @@ async function home(_req: Request): Promise<Response> {
             in the server sandbox, so the contract stays the contract.
           </p>
         </article>
-        <article class="feat">
-          <span class="feat__num">02</span>
+        <article class="feat reveal reveal-d2">
+          <p class="feat__num">02</p>
           <h3>Persistent by default</h3>
           <p>
             Local dev writes to a real SQLite file. Edge deploys get a managed SQLite.
-            No in-memory resets, no "did you remember to flush". The data outlives the
-            process.
+            No in-memory resets. The data outlives the process.
           </p>
         </article>
-        <article class="feat">
-          <span class="feat__num">03</span>
+        <article class="feat reveal reveal-d3">
+          <p class="feat__num">03</p>
           <h3>One port, one bundle</h3>
           <p>
             The client, the server, and the static SPA all live on the same origin. One
-            deploy artifact, one process, one URL. No CORS. No "is staging on the same
-            domain?" Slack archaeology.
+            deploy artifact, one process, one URL. No CORS archaeology.
           </p>
         </article>
-        <article class="feat">
-          <span class="feat__num">04</span>
+        <article class="feat reveal reveal-d4">
+          <p class="feat__num">04</p>
           <h3>Typed through and through</h3>
           <p>
             <code>useQuery&lt;Todo[]&gt;("todos")</code> is end-to-end typed.
-            Mutations are <code>useMutation&lt;[id: string, done: boolean], void&gt;</code>.
             Rename a query and the client errors in the editor, not in production.
           </p>
         </article>
-        <article class="feat">
-          <span class="feat__num">05</span>
+        <article class="feat reveal reveal-d5">
+          <p class="feat__num">05</p>
           <h3>Runs on Railway Edge</h3>
           <p>
-            <code>luminaweb deploy</code> pushes your capsule to the Luminaweb Edge, a Bun +
-            SQLite runtime on Railway. Anonymous deploys go through in seconds. Claim
-            for server env, outbound fetch, and stable subdomains.
+            <code>luminaweb deploy</code> pushes your capsule to the Luminaweb Edge.
+            Anonymous deploys go through in seconds. Claim for stable subdomains.
           </p>
         </article>
-        <article class="feat">
-          <span class="feat__num">06</span>
+        <article class="feat reveal reveal-d6">
+          <p class="feat__num">06</p>
           <h3>Inspectable</h3>
           <p>
             <code>luminaweb db dump</code>, <code>luminaweb logs</code>, <code>luminaweb inspect</code>.
-            The CLI reads <code>.luminaweb/deploy.json</code> and sends the saved claim token
+            The CLI reads <code>.luminaweb/deploy.json</code> and sends the claim token
             automatically. No portal, no click-ops.
           </p>
         </article>
@@ -340,14 +360,26 @@ async function home(_req: Request): Promise<Response> {
 
     <section class="deploy">
       <div class="deploy__inner">
-        <span class="eyebrow">deploy</span>
-        <h2>From <code class="dim">my-app/</code><br/>to <span class="accent">live</span> in one command.</h2>
+        <p class="deploy__eyebrow reveal">deploy</p>
+        <h2 class="reveal reveal-d1">From <code>my-app/</code><br/>to <em>live</em> in one command.</h2>
         <ol class="deploy__steps">
-          <li><span class="deploy__num">01</span><span class="deploy__cmd"><code>luminaweb build --target edge</code></span><span class="deploy__note">bundle server.mjs + client/bundle.js</span></li>
-          <li><span class="deploy__num">02</span><span class="deploy__cmd"><code>luminaweb deploy</code></span><span class="deploy__note">push to edge.luminaweb.app</span></li>
-          <li><span class="deploy__num">03</span><span class="deploy__cmd"><code>luminaweb claim</code></span><span class="deploy__note">opt in for env, fetch, and subdomains</span></li>
+          <li class="reveal reveal-d2">
+            <span class="deploy__num">01</span>
+            <span class="deploy__cmd"><code>luminaweb build --target edge</code></span>
+            <span class="deploy__note">bundle server.mjs + client/bundle.js</span>
+          </li>
+          <li class="reveal reveal-d3">
+            <span class="deploy__num">02</span>
+            <span class="deploy__cmd"><code>luminaweb deploy</code></span>
+            <span class="deploy__note">push to edge.luminaweb.app</span>
+          </li>
+          <li class="reveal reveal-d4">
+            <span class="deploy__num">03</span>
+            <span class="deploy__cmd"><code>luminaweb claim</code></span>
+            <span class="deploy__note">opt in for env, fetch, and subdomains</span>
+          </li>
         </ol>
-        <div class="deploy__url">
+        <div class="deploy__url reveal reveal-d5">
           <span class="deploy__url-label">live url</span>
           <code>https://my-app.luminaweb.app</code>
         </div>
@@ -355,11 +387,8 @@ async function home(_req: Request): Promise<Response> {
     </section>
 
     <section class="cta">
-      <h2>Build the thing.<br/><span class="dim">The runtime will keep up.</span></h2>
-      <a class="btn btn--primary btn--lg" href="/docs/quickstart">
-        <span>Read the quickstart</span>
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
+      <h2 class="reveal">Build the thing.<br/><em>The runtime will keep up.</em></h2>
+      <a class="btn btn--primary btn--lg reveal reveal-d1" href="/docs/quickstart">Read the quickstart</a>
     </section>
   `;
   return htmlResponse(
@@ -375,7 +404,7 @@ async function home(_req: Request): Promise<Response> {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Docs pages                                                         */
+/*  Docs pages                                                          */
 /* ------------------------------------------------------------------ */
 
 const DOCS_NAV = `
@@ -392,9 +421,9 @@ const DOCS_NAV = `
 async function docs(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs</span>
-        <h1>Luminaweb Docs <span class="nav__pill">[alpha]</span></h1>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs</span>
+        <h1>Luminaweb Docs <span class="nav__tag">alpha</span></h1>
         <p class="doc__lede">
           Luminaweb is an agent-native CLI and runtime for building small full-stack TypeScript
           apps called <strong>capsules</strong>. The capsule directory is the whole app: server
@@ -402,7 +431,7 @@ async function docs(_req: Request): Promise<Response> {
         </p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>Start here</h2>
         <p>Create and run a capsule:</p>
         <pre><code>npx luminaweb new my-app --template todo
@@ -410,17 +439,17 @@ cd my-app
 npx luminaweb dev</code></pre>
         <p>
           <code>npx luminaweb create</code> is an alias for <code>npx luminaweb new</code>. New capsules
-          get a git repository and initial commit unless they are created inside an existing git
+          get a git repository and initial commit unless created inside an existing git
           repository or <code>--no-git</code> is passed.
         </p>
         <h2>Capsule shape</h2>
         <pre><code>server/index.ts        # schema, queries, mutations, endpoints
 client/index.tsx       # Preact UI
 shared/                # pure types &amp; helpers
-.env.luminaweb.server     # server-only env</code></pre>
+.env.luminaweb.server  # server-only env</code></pre>
         <h2>Read next</h2>
         <ul>
-          <li><a href="/docs/quickstart">Quickstart</a> — the fastest path from <code>npm i</code> to <code>live url</code>.</li>
+          <li><a href="/docs/quickstart">Quickstart</a> — the fastest path from <code>npm i</code> to a live URL.</li>
           <li><a href="/docs/capsule-api">Capsule API</a> — the API shape an agent uses.</li>
           <li><a href="/docs/reference">Reference</a> — capsule runtime, data API, CLI, deploy.</li>
           <li><a href="/docs/cli">CLI</a> — every command, every flag.</li>
@@ -443,13 +472,13 @@ shared/                # pure types &amp; helpers
 async function docsQuickstart(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs · quickstart</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs · quickstart</span>
         <h1>Quickstart</h1>
         <p class="doc__lede">From <code>npm i</code> to a live URL in under a minute.</p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>1 · Install</h2>
         <pre><code>npm i -g luminaweb
 luminaweb version
@@ -487,13 +516,13 @@ luminaweb claim</code></pre>
 async function docsReference(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs · reference</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs · reference</span>
         <h1>Reference</h1>
         <p class="doc__lede">The full capsule contract: server, data API, client, auth, env, deploy.</p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>Capsule</h2>
         <p>A capsule is one complete app: source, server API, client UI, state, auth, logs, and deploy URL.</p>
         <h2>Server API</h2>
@@ -555,13 +584,13 @@ async function docsReference(_req: Request): Promise<Response> {
 async function docsCapsuleApi(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs · capsule api</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs · capsule api</span>
         <h1>Capsule API</h1>
         <p class="doc__lede">The shape an agent uses when authoring a capsule.</p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>Define the server</h2>
         <pre><code>import { boolean, capsule, mutation, query, string, table } from "@luminaweb/runtime/server";
 
@@ -613,13 +642,13 @@ export function App() {
 async function docsCli(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs · cli</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs · cli</span>
         <h1>CLI</h1>
         <p class="doc__lede">Every command, every flag.</p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>Commands</h2>
         <pre><code>luminaweb new [name] [--template todo] [--no-git]
 luminaweb create [name]                    # alias for new
@@ -638,11 +667,11 @@ luminaweb version
 luminaweb help</code></pre>
         <h2>Environment</h2>
         <ul>
-          <li><code>ZAPDEV_TOKEN</code> — auth token for claimed deploys.</li>
-          <li><code>ZAPDEV_EDGE_URL</code> — override the edge target (default <code>https://edge.luminaweb.app</code>).</li>
-          <li><code>ZAPDEV_DATA_DIR</code> — where the edge stores SQLite files.</li>
-          <li><code>ZAPDEV_TRUST_PROXY_HEADERS</code> — trust forwarded client IPs.</li>
-          <li><code>ZAPDEV_DEBUG</code> — print stack traces on CLI errors.</li>
+          <li><code>LUMINAWEB_TOKEN</code> — auth token for claimed deploys.</li>
+          <li><code>LUMINAWEB_EDGE_URL</code> — override the edge target (default <code>https://edge.luminaweb.app</code>).</li>
+          <li><code>LUMINAWEB_DATA_DIR</code> — where the edge stores SQLite files.</li>
+          <li><code>LUMINAWEB_TRUST_PROXY_HEADERS</code> — trust forwarded client IPs.</li>
+          <li><code>LUMINAWEB_DEBUG</code> — print stack traces on CLI errors.</li>
         </ul>
       </article>
     </section>
@@ -661,13 +690,13 @@ luminaweb help</code></pre>
 async function docsDeploy(_req: Request): Promise<Response> {
   const body = `
     <section class="doc">
-      <header class="doc__head">
-        <span class="eyebrow">docs · deploy</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--blue">docs · deploy</span>
         <h1>Deploy</h1>
         <p class="doc__lede">Push the bundle. Claim for env. Ship.</p>
       </header>
       ${DOCS_NAV}
-      <article class="prose">
+      <article class="prose reveal">
         <h2>Build</h2>
         <pre><code>luminaweb build --target edge --out dist
 # dist/server.mjs
@@ -678,7 +707,7 @@ async function docsDeploy(_req: Request): Promise<Response> {
         <pre><code>luminaweb deploy</code></pre>
         <p>Anonymous deploys work first. The bundle is uploaded to <code>edge.luminaweb.app</code> and served from a fresh subdomain within seconds.</p>
         <h2>Claim</h2>
-        <pre><code>export ZAPDEV_TOKEN=...
+        <pre><code>export LUMINAWEB_TOKEN=...
 luminaweb claim</code></pre>
         <p>Claiming enables server-only env (<code>.env.luminaweb.server</code>), outbound <code>fetch</code>, and a stable subdomain.</p>
         <h2>Reserve a subdomain</h2>
@@ -704,43 +733,43 @@ luminaweb logs my-app.luminaweb.app</code></pre>
 async function examples(_req: Request): Promise<Response> {
   const body = `
     <section class="examples">
-      <header class="doc__head">
-        <span class="eyebrow">examples</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--green">examples</span>
         <h1>Cookbook</h1>
         <p class="doc__lede">Each example is a complete capsule. Copy, edit, ship.</p>
       </header>
       <div class="examples__grid">
-        <a class="ex" href="/examples/todo">
+        <a class="ex reveal reveal-d1" href="/examples/todo">
           <span class="ex__num">01</span>
           <h3>todo</h3>
           <p>Per-user rows, ownership checks, checkbox mutation, clear-completed. The smallest useful Luminaweb app.</p>
           <pre><code>luminaweb new my-app --template todo</code></pre>
         </a>
-        <a class="ex" href="/examples/guestbook">
+        <a class="ex reveal reveal-d2" href="/examples/guestbook">
           <span class="ex__num">02</span>
           <h3>guestbook</h3>
           <p>Shared feed, author metadata from auth, bounded text validation. Demonstrates server-set trusted fields.</p>
           <pre><code>luminaweb new my-app --template guestbook</code></pre>
         </a>
-        <a class="ex" href="/examples/chat">
+        <a class="ex reveal reveal-d3" href="/examples/chat">
           <span class="ex__num">03</span>
           <h3>chat</h3>
           <p>Realtime-feel message feed with <code>useQuery</code> invalidation. End-to-end typed messages.</p>
           <pre><code>luminaweb new my-app --template chat</code></pre>
         </a>
-        <a class="ex" href="/examples/counter">
+        <a class="ex reveal reveal-d4" href="/examples/counter">
           <span class="ex__num">04</span>
           <h3>counter</h3>
           <p>One button, one number, one mutation. The whole runtime, in 30 lines.</p>
           <pre><code>luminaweb new my-app --template counter</code></pre>
         </a>
-        <a class="ex" href="/examples/webhook">
+        <a class="ex reveal reveal-d5" href="/examples/webhook">
           <span class="ex__num">05</span>
           <h3>webhook</h3>
           <p>Stripe-shaped webhook receiver with shared-secret verification. Demonstrates <code>endpoint()</code> and <code>ctx.env</code>.</p>
           <pre><code>luminaweb new my-app --template webhook</code></pre>
         </a>
-        <a class="ex" href="/examples/blank">
+        <a class="ex reveal reveal-d6" href="/examples/blank">
           <span class="ex__num">06</span>
           <h3>blank</h3>
           <p>An empty capsule. The smallest possible surface area.</p>
@@ -763,26 +792,24 @@ async function examples(_req: Request): Promise<Response> {
 async function playground(_req: Request): Promise<Response> {
   const body = `
     <section class="play">
-      <header class="doc__head">
-        <span class="eyebrow">playground</span>
+      <header class="doc__head reveal">
+        <span class="tag tag--yellow">playground</span>
         <h1>Try Luminaweb in the browser.</h1>
         <p class="doc__lede">A live capsule. The source is the same source. Reload to reset state.</p>
       </header>
-      <div class="play__grid">
-        <div class="play__capsule">
-          <div class="play__frame">
-            <div class="play__titlebar">
-              <span class="play__dot play__dot--a"></span>
-              <span class="play__dot play__dot--b"></span>
-              <span class="play__dot play__dot--c"></span>
-              <span class="play__url">my-app.luminaweb.app</span>
-            </div>
-            <div class="play__body" id="play-app">
-              <p class="play__loading">loading capsule…</p>
-            </div>
+      <div class="play__grid reveal reveal-d1">
+        <div class="play__frame">
+          <div class="play__titlebar">
+            <span class="play__dot play__dot--a"></span>
+            <span class="play__dot play__dot--b"></span>
+            <span class="play__dot play__dot--c"></span>
+            <span class="play__url">my-app.luminaweb.app</span>
+          </div>
+          <div class="play__body" id="play-app">
+            <p class="play__loading">loading capsule</p>
           </div>
         </div>
-        <aside class="play__src">
+        <div class="play__src">
           <div class="play__tabs">
             <span class="play__tab play__tab--active">server/index.ts</span>
             <span class="play__tab">client/index.tsx</span>
@@ -809,7 +836,7 @@ async function playground(_req: Request): Promise<Response> {
     }),
   },
 });</code></pre>
-        </aside>
+        </div>
       </div>
     </section>
   `;
@@ -825,7 +852,7 @@ async function playground(_req: Request): Promise<Response> {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Machine-readable                                                   */
+/*  Machine-readable                                                    */
 /* ------------------------------------------------------------------ */
 
 async function manifest(_req: Request): Promise<Response> {
@@ -891,31 +918,18 @@ async function llms(_req: Request): Promise<Response> {
 }
 
 async function llmsFull(_req: Request): Promise<Response> {
-  // Concatenate the local doc pages into a single LLM-friendly dump.
-  // Uses the same generators as the live routes so the content always
-  // matches what humans see.
-  const pages = [
-    docs,
-    docsQuickstart,
-    docsReference,
-    docsCapsuleApi,
-    docsCli,
-    docsDeploy,
-  ];
+  const pages = [docs, docsQuickstart, docsReference, docsCapsuleApi, docsCli, docsDeploy];
   const blocks: string[] = [];
-  for (const page of pages) {
+  for (const p of pages) {
     try {
-      const res = await page(new Request("http://localhost/"));
+      const res = await p(new Request("http://localhost/"));
       const text = await res.text();
       blocks.push(stripHtml(text));
     } catch {
       blocks.push("(unavailable)");
     }
   }
-  return textResponse(`# Luminaweb — full text
-
-${blocks.join("\n\n---\n\n")}
-`);
+  return textResponse(`# Luminaweb — full text\n\n${blocks.join("\n\n---\n\n")}\n`);
 }
 
 async function securityTxt(_req: Request): Promise<Response> {
@@ -929,7 +943,7 @@ async function styleCss(_req: Request): Promise<Response> {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Utilities                                                          */
+/*  Utilities                                                           */
 /* ------------------------------------------------------------------ */
 
 function escape(s: string): string {

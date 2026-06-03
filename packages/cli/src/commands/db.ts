@@ -1,5 +1,5 @@
 /**
- * `zapdev db list|dump <deploy-id-or-url>`
+ * `luminaweb db list|dump <deploy-id-or-url>`
  */
 
 import type { Ctx } from "../ctx.js";
@@ -9,11 +9,11 @@ export async function dbCommand(ctx: Ctx) {
   const sub = ctx.args[1];
   const target = ctx.args[2];
   if (!sub || !target) {
-    out.err("usage: zapdev db list|dump <deploy-id-or-url>");
+    out.err("usage: luminaweb db list|dump <deploy-id-or-url>");
     process.exit(2);
   }
 
-  out.banner(`▌▌  zapdev db ${sub}`);
+  out.banner(`▌▌  luminaweb db ${sub}`);
   out.step(`target: ${target}`);
   out.plain("");
 

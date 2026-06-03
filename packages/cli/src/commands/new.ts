@@ -1,9 +1,9 @@
 /**
- * `zapdev new [name] [--template todo|guestbook] [--no-git]`
+ * `luminaweb new [name] [--template todo|guestbook] [--no-git]`
  *
  * Scaffolds a new capsule from one of the bundled templates. Each
  * template is a complete app: `server/index.ts`, `client/index.tsx`,
- * `shared/`, `.env.zapdev.server`, and a `package.json`.
+ * `shared/`, `.env.luminaweb.server`, and a `package.json`.
  */
 
 import {
@@ -51,7 +51,7 @@ export async function newCommand(ctx: Ctx) {
     process.exit(1);
   }
 
-  out.banner("▌▌  zapdev new");
+  out.banner("▌▌  luminaweb new");
   out.step(`template: ${template}`);
   out.step(`destination: ${dest}`);
 
@@ -79,7 +79,7 @@ export async function newCommand(ctx: Ctx) {
       const { execSync } = await import("node:child_process");
       execSync("git init -q", { cwd: dest, stdio: "ignore" });
       execSync("git add -A", { cwd: dest, stdio: "ignore" });
-      execSync('git -c user.email="zapdev@local" -c user.name="zapdev" commit -q -m "init: scaffold zapdev capsule"', {
+      execSync('git -c user.email="luminaweb@local" -c user.name="luminaweb" commit -q -m "init: scaffold luminaweb capsule"', {
         cwd: dest,
         stdio: "ignore",
       });
@@ -92,7 +92,7 @@ export async function newCommand(ctx: Ctx) {
   out.plain("");
   out.plain(`  cd ${name}`);
   out.plain(`  bun install`);
-  out.plain(`  zapdev dev`);
+  out.plain(`  luminaweb dev`);
   out.plain("");
   out.plain(`  → http://localhost:3000`);
   out.plain("");
@@ -101,7 +101,7 @@ export async function newCommand(ctx: Ctx) {
 function copyDir(src: string, dest: string) {
   mkdirSync(dest, { recursive: true });
   for (const entry of readdirSync(src)) {
-    if (entry === "node_modules" || entry === ".git" || entry === "dist" || entry === ".zapdev") continue;
+    if (entry === "node_modules" || entry === ".git" || entry === "dist" || entry === ".luminaweb") continue;
     const sp = join(src, entry);
     const dp = join(dest, entry);
     const stat = statSync(sp);

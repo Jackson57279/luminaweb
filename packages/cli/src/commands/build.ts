@@ -1,5 +1,5 @@
 /**
- * `zapdev build [dir] --target edge --out dist`
+ * `luminaweb build [dir] --target edge --out dist`
  *
  * Produces a self-contained bundle that the Edge runtime can serve.
  * Output structure:
@@ -31,7 +31,7 @@ export async function buildCommand(ctx: Ctx) {
     process.exit(2);
   }
 
-  out.banner("▌▌  zapdev build");
+  out.banner("▌▌  luminaweb build");
   out.step(`directory: ${dir}`);
   out.step(`target:    ${target}`);
   out.step(`output:    ${outDir}`);
@@ -79,7 +79,7 @@ export async function buildCommand(ctx: Ctx) {
     name: readName(dir),
     target,
     builtAt: new Date().toISOString(),
-    runtime: "@zapdev/runtime",
+    runtime: "@luminaweb/runtime",
     version: "0.1.0",
   };
   writeFileSync(join(outDir, "manifest.json"), JSON.stringify(manifest, null, 2));
@@ -91,7 +91,7 @@ export async function buildCommand(ctx: Ctx) {
   out.plain(`  dist/client/index.html`);
   out.plain(`  dist/manifest.json`);
   out.plain("");
-  out.plain("  next: zapdev deploy");
+  out.plain("  next: luminaweb deploy");
   out.plain("");
 }
 
@@ -101,17 +101,17 @@ function renderHtml(): string {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Zapdev Capsule</title>
+    <title>Luminaweb Capsule</title>
     <link rel="stylesheet" href="/__zap__/client.css" />
     <style>
       :root { color-scheme: dark; }
       html, body { background: #0a0a0a; color: #f5f5f0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; }
-      .__zapdev_loader { position: fixed; inset: 0; display: grid; place-items: center; font-family: ui-monospace, monospace; color: #7a7a75; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+      .__luminaweb_loader { position: fixed; inset: 0; display: grid; place-items: center; font-family: ui-monospace, monospace; color: #7a7a75; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
     </style>
   </head>
   <body>
     <div id="app">
-      <div class="__zapdev_loader">zapdev runtime</div>
+      <div class="__luminaweb_loader">luminaweb runtime</div>
     </div>
     <script type="module" src="/__zap__/client.js"></script>
   </body>

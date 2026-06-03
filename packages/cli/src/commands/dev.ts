@@ -1,5 +1,5 @@
 /**
- * `zapdev dev [dir] [--port 3000]`
+ * `luminaweb dev [dir] [--port 3000]`
  *
  * Starts a local dev server: bundles the Preact client with esbuild on
  * demand, runs the server runtime on Bun, and proxies client requests
@@ -18,11 +18,11 @@ export async function devCommand(ctx: Ctx) {
 
   if (!existsSync(join(dir, "server/index.ts"))) {
     out.err(`no server/index.ts in ${dir}`);
-    out.plain(`  run \`zapdev new\` first to scaffold a capsule.`);
+    out.plain(`  run \`luminaweb new\` first to scaffold a capsule.`);
     process.exit(1);
   }
 
-  out.banner("▌▌  zapdev dev");
+  out.banner("▌▌  luminaweb dev");
   out.step(`directory: ${dir}`);
   out.step(`port:      ${port}`);
   out.plain("");
@@ -42,8 +42,8 @@ async function startServer(dir: string, port: number) {
     env: {
       ...process.env,
       PORT: String(port),
-      ZAPDEV_PORT: String(port),
-      ZAPDEV_DEV: "1",
+      LUMINAWEB_PORT: String(port),
+      LUMINAWEB_DEV: "1",
     },
     stdout: "inherit",
     stderr: "inherit",
@@ -62,7 +62,7 @@ function watchTree(dir: string) {
   try {
     watch(dir, { recursive: true }, (event, filename) => {
       if (!filename) return;
-      if (filename.includes("node_modules") || filename.includes(".zapdev")) return;
+      if (filename.includes("node_modules") || filename.includes(".luminaweb")) return;
       out.dim(`→ ${event} ${filename}`);
     });
   } catch {

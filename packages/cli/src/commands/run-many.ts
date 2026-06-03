@@ -1,5 +1,5 @@
 /**
- * `zapdev run-many [dir] [--count 20] [--base-port 4000]`
+ * `luminaweb run-many [dir] [--count 20] [--base-port 4000]`
  *
  * Boots N local dev instances on consecutive ports. Useful for testing
  * multi-user flows and load.
@@ -14,7 +14,7 @@ export async function runManyCommand(ctx: Ctx) {
   const count = Number(ctx.flag("count") ?? "20");
   const basePort = Number(ctx.flag("base-port") ?? "4000");
 
-  out.banner("▌▌  zapdev run-many");
+  out.banner("▌▌  luminaweb run-many");
   out.step(`directory:  ${dir}`);
   out.step(`count:      ${count}`);
   out.step(`base port:  ${basePort}`);
@@ -29,9 +29,9 @@ export async function runManyCommand(ctx: Ctx) {
       env: {
         ...process.env,
         PORT: String(port),
-        ZAPDEV_PORT: String(port),
-        ZAPDEV_INSTANCE: String(i),
-        ZAPDEV_DEV: "1",
+        LUMINAWEB_PORT: String(port),
+        LUMINAWEB_INSTANCE: String(i),
+        LUMINAWEB_DEV: "1",
       },
       stdout: "inherit",
       stderr: "inherit",

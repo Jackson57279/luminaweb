@@ -1,20 +1,20 @@
 #!/usr/bin/env bun
 /**
- * Zapdev CLI.
+ * Luminaweb CLI.
  *
  * Usage:
- *   zapdev new [name] [--template todo|guestbook] [--no-git]
- *   zapdev dev [dir] [--port 3000]
- *   zapdev build [dir] --target edge --out dist
- *   zapdev deploy [dir] [--public] [--env-file .env.zapdev.server]
- *   zapdev claim [dir]
- *   zapdev inspect <deploy-id-or-url>
- *   zapdev db list|dump <deploy-id-or-url>
- *   zapdev logs <deploy-id-or-url>
- *   zapdev auth as <name>
- *   zapdev auth reset
- *   zapdev run-many [dir] [--count 20] [--base-port 4000]
- *   zapdev version
+ *   luminaweb new [name] [--template todo|guestbook] [--no-git]
+ *   luminaweb dev [dir] [--port 3000]
+ *   luminaweb build [dir] --target edge --out dist
+ *   luminaweb deploy [dir] [--public] [--env-file .env.luminaweb.server]
+ *   luminaweb claim [dir]
+ *   luminaweb inspect <deploy-id-or-url>
+ *   luminaweb db list|dump <deploy-id-or-url>
+ *   luminaweb logs <deploy-id-or-url>
+ *   luminaweb auth as <name>
+ *   luminaweb auth reset
+ *   luminaweb run-many [dir] [--count 20] [--base-port 4000]
+ *   luminaweb version
  */
 
 import { newCommand } from "./commands/new.js";
@@ -31,7 +31,7 @@ import { helpCommand, versionCommand } from "./commands/help.js";
 import { out } from "./utils.js";
 
 const VERSION = "0.1.0";
-const BANNER = "▌▌  zapdev";
+const BANNER = "▌▌  luminaweb";
 
 const args = process.argv.slice(2);
 const command = args[0];
@@ -82,13 +82,13 @@ async function main() {
       case undefined:
         return helpCommand(ctx);
       default:
-        process.stderr.write(`zapdev: unknown command "${command}"\n`);
-        process.stderr.write(`run \`zapdev help\` for usage.\n`);
+        process.stderr.write(`luminaweb: unknown command "${command}"\n`);
+        process.stderr.write(`run \`luminaweb help\` for usage.\n`);
         process.exit(2);
     }
   } catch (err) {
     process.stderr.write(`\n  ${BANNER}  error\n  ${String(err)}\n\n`);
-    if (process.env.ZAPDEV_DEBUG) {
+    if (process.env.LUMINAWEB_DEBUG) {
       console.error(err);
     }
     process.exit(1);

@@ -1,5 +1,5 @@
 /**
- * `zapdev logs <deploy-id-or-url>`
+ * `luminaweb logs <deploy-id-or-url>`
  *
  * Streams structured JSON log lines from the edge. We currently emit a
  * demo stream so users can see the shape.
@@ -14,7 +14,7 @@ export async function logsCommand(ctx: Ctx) {
     out.err("missing deploy id or url");
     process.exit(2);
   }
-  out.banner("▌▌  zapdev logs");
+  out.banner("▌▌  luminaweb logs");
   out.step(`target: ${target}`);
   out.plain("");
 

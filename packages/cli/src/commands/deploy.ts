@@ -1,8 +1,8 @@
 /**
- * `zapdev deploy [dir]`
+ * `luminaweb deploy [dir]`
  *
- * Uploads a built bundle to the configured Zapdev Edge. The default edge
- * is the Zapdev Cloud; the env var ZAPDEV_EDGE_URL can override.
+ * Uploads a built bundle to the configured Luminaweb Edge. The default edge
+ * is the Luminaweb Cloud; the env var LUMINAWEB_EDGE_URL can override.
  */
 
 import { existsSync } from "node:fs";
@@ -13,16 +13,16 @@ import { out } from "../utils.js";
 export async function deployCommand(ctx: Ctx) {
   const dir = resolve(process.cwd(), ctx.args[1] && !ctx.args[1].startsWith("--") ? ctx.args[1] : ".");
   const isPublic = ctx.boolFlag("public");
-  const edgeUrl = process.env.ZAPDEV_EDGE_URL ?? "https://edge.zapdev.dev";
-  const token = process.env.ZAPDEV_TOKEN;
+  const edgeUrl = process.env.LUMINAWEB_EDGE_URL ?? "https://edge.luminaweb.app";
+  const token = process.env.LUMINAWEB_TOKEN;
 
   if (!existsSync(join(dir, "dist/manifest.json"))) {
     out.err(`no dist/manifest.json in ${dir}`);
-    out.plain(`  run \`zapdev build\` first.`);
+    out.plain(`  run \`luminaweb build\` first.`);
     process.exit(1);
   }
 
-  out.banner("▌▌  zapdev deploy");
+  out.banner("▌▌  luminaweb deploy");
   out.step(`directory: ${dir}`);
   out.step(`edge:      ${edgeUrl}`);
   out.step(`public:    ${isPublic}`);
@@ -43,11 +43,11 @@ export async function deployCommand(ctx: Ctx) {
   out.ok(`deploy ${deployId} is live`);
   out.plain("");
   out.plain(`  url:  ${edgeUrl.replace(/^https?:\/\//, "")}/${deployId}`);
-  out.plain(`  claim: zapdev claim ${dir}`);
+  out.plain(`  claim: luminaweb claim ${dir}`);
   out.plain("");
 
   if (!token) {
-    out.warn(`no ZAPDEV_TOKEN in env — deploy is anonymous.`);
-    out.plain("  set ZAPDEV_TOKEN=... in your environment for stable deploys.");
+    out.warn(`no LUMINAWEB_TOKEN in env — deploy is anonymous.`);
+    out.plain("  set LUMINAWEB_TOKEN=... in your environment for stable deploys.");
   }
 }
