@@ -1,0 +1,114 @@
+Dockerfile
+  s_5ad935cfd3b76c::t_0a1395b2b5f1ff 29
+  s_5ad935cfd3b76c::t_977250487fcd28 162
+  s_aa9ceb803ddc89::t_2792ed933f5af9 150-152,158-160,164
+  s_5ad935cfd3b76c::t_12a2434d12934a 156
+apps/web/app/docs/page.tsx
+  s_aa9ceb803ddc89::t_a1f59c94060123 1-12
+apps/web/components/nav.tsx
+  s_aa9ceb803ddc89::t_ff0f83c92f0ef3 1-25
+apps/web/app/manifest/route.ts
+  s_aa9ceb803ddc89::t_bd1ca906ce9913 1-28
+apps/web/components/ui/label.tsx
+  s_aa9ceb803ddc89::t_6e84e63c58a775 1-18
+apps/web/app/account/page.tsx
+  s_aa9ceb803ddc89::t_8a473952549aed 1-20
+apps/web/app/docs/capsule-api/page.tsx
+  s_aa9ceb803ddc89::t_d3b3f71cd891b0 1-12
+apps/web/app/docs.json/route.ts
+  s_aa9ceb803ddc89::t_3d57978bbca7bf 1-23
+apps/web/next.config.mjs
+  s_aa9ceb803ddc89::t_5c0ec27d040253 4-8,11-20
+  s_aa9ceb803ddc89::t_bb109eb18fa4d7 3
+  s_aa9ceb803ddc89::t_590a4c91ef9bb2 1-2,9-10,21-25
+apps/web/app/docs/cli/page.tsx
+  s_aa9ceb803ddc89::t_042544f5c5e078 1-12
+apps/web/app/llms-full.txt/route.ts
+  s_aa9ceb803ddc89::t_b3c87045b7aaa8 1-31
+apps/web/postcss.config.mjs
+  s_aa9ceb803ddc89::t_c93b0b6578bfa0 1-7
+apps/web/app/d/[id]/[[...path]]/route.ts
+  s_aa9ceb803ddc89::t_a2c6717a792713 1-12
+apps/web/app/docs/deploy/page.tsx
+  s_aa9ceb803ddc89::t_710ebe22a4107d 1-12
+apps/web/public/.well-known/security.txt
+  s_aa9ceb803ddc89::t_e398454396aad8 1-2
+apps/web/components/ui/button.tsx
+  s_aa9ceb803ddc89::t_7684a388d76413 1-40
+apps/web/app/playground/page.tsx
+  s_aa9ceb803ddc89::t_66c61959e8bf23 1-12
+apps/web/lib/utils.ts
+  s_aa9ceb803ddc89::t_6ae94b333e44ec 1-6
+apps/web/app/api/deploy/[id]/claim/route.ts
+  s_aa9ceb803ddc89::t_fd96a5e7cc073f 1-19
+apps/web/app/api/auth/[...all]/route.ts
+  s_aa9ceb803ddc89::t_da9a82d5b3cd90 1-10
+apps/web/lib/auth.ts
+  s_aa9ceb803ddc89::t_9bcfe2aa0bb1a9 11-67,70-83,91-98
+  s_aa9ceb803ddc89::t_0f72463169d1fe 68-69,84-90
+apps/web/package.json
+  s_aa9ceb803ddc89::t_8a7a6fb3388225 7-9,13-27
+  s_5ad935cfd3b76c::t_cb9f1979effcad 12
+apps/web/app/docs/quickstart/page.tsx
+  s_aa9ceb803ddc89::t_58e69a85b407ec 1-12
+apps/web/app/layout.tsx
+  s_aa9ceb803ddc89::t_515417ad7078e5 1-45
+apps/web/components/footer.tsx
+  s_aa9ceb803ddc89::t_2e922e17532a13 1-38
+apps/web/app/api/deploy/route.ts
+  s_aa9ceb803ddc89::t_2cdab3157761e5 1-34
+apps/web/lib/content.ts
+  s_aa9ceb803ddc89::t_2dd4970a885eb3 2-4,7,12,14-22,25,114,231,271,304,316,352,361,371,394,408,445,477,525,550
+apps/web/app/globals.css
+  s_aa9ceb803ddc89::t_edc0cf4879aa37 1-27
+apps/web/.gitignore
+  s_aa9ceb803ddc89::t_240722566fc177 1-7
+apps/web/tsconfig.json
+  s_aa9ceb803ddc89::t_834394d7f513ea 1-23
+apps/web/components/ui/card.tsx
+  s_aa9ceb803ddc89::t_ead8bfef9d43b2 1-53
+apps/web/app/llms.txt/route.ts
+  s_aa9ceb803ddc89::t_1e532ebe933a9b 1-23
+apps/web/app/examples/page.tsx
+  s_aa9ceb803ddc89::t_797ff3830dcc4a 1-12
+apps/web/lib/platform.ts
+  s_aa9ceb803ddc89::t_5af5ec28c9b39d 25-54
+  s_aa9ceb803ddc89::t_4e88a294d700f4 59-109
+  s_aa9ceb803ddc89::t_145dacb2a57599 153
+apps/web/components/ui/input.tsx
+  s_aa9ceb803ddc89::t_5e96cffba96b5d 1-19
+apps/web/app/api/tokens/route.ts
+  s_aa9ceb803ddc89::t_6c4325d0a2c223 1-24
+apps/web/app/page.tsx
+  s_aa9ceb803ddc89::t_b20839ddefbee0 1-13
+apps/web/components/reveal.tsx
+  s_aa9ceb803ddc89::t_d781f6e5880d17 1-23
+apps/web/app/docs/reference/page.tsx
+  s_aa9ceb803ddc89::t_8eefc3991ab928 1-12
+apps/web/components/account-client.tsx
+  s_aa9ceb803ddc89::t_7fc50180d79f08 1-232
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "78c33701c25416bac0c47040b68e64a7da7966e5",
+  "prompts": {},
+  "sessions": {
+    "s_5ad935cfd3b76c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_16cbecc28ffe6vfqsr4b2ZwF7b",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    },
+    "s_aa9ceb803ddc89": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4ce1fc56-efb7-459d-86ab-2889bf393364",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
