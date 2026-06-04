@@ -1,0 +1,27 @@
+@import "tailwindcss";
+/* Ported verbatim from the original Bun marketing site. Drives every
+   marketing/docs page (.nav, .hero, .doc, .prose, .play, etc). */
+@import "../public/style.css";
+
+/* shadcn-style tokens, themed to the Luminaweb warm-monochrome palette.
+   Used only by the rebuilt /account auth page components. */
+@theme inline {
+  --color-background: #fbfbfa;
+  --color-foreground: #111111;
+  --color-card: #ffffff;
+  --color-card-foreground: #111111;
+  --color-muted: #f7f6f3;
+  --color-muted-foreground: #787774;
+  --color-border: #eaeaea;
+  --color-input: #eaeaea;
+  --color-ring: #111111;
+  --color-primary: #111111;
+  --color-primary-foreground: #fbfbfa;
+  --color-destructive: #9f2f2d;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --font-sans: "Geist", "Helvetica Neue", -apple-system, sans-serif;
+  --font-serif: "Instrument Serif", "Newsreader", Georgia, serif;
+  --font-mono: "Geist Mono", "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+}

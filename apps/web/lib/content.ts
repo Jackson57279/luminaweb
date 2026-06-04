@@ -1,192 +1,28 @@
 /* =====================================================================
-   Luminaweb marketing site.
-   Server-rendered HTML served by a single Bun process.
-   Design: Premium Utilitarian Minimalism · Warm Monochrome
-   Type: Instrument Serif (display) + Geist (body) + Geist Mono (code)
+   Page body markup, ported verbatim from the original Bun server.
+   Rendered into the shared shell via dangerouslySetInnerHTML so the
+   GUI is byte-for-byte identical to the previous site.
    ===================================================================== */
 
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-
-const PORT = Number(process.env.PORT ?? 3000);
-const PUBLIC_DIR = join(import.meta.dir, "public");
-
-const PAGES: Record<string, Page> = {
-  "/": home,
-  "/docs": docs,
-  "/docs/quickstart": docsQuickstart,
-  "/docs/reference": docsReference,
-  "/docs/capsule-api": docsCapsuleApi,
-  "/docs/cli": docsCli,
-  "/docs/deploy": docsDeploy,
-  "/examples": examples,
-  "/playground": playground,
-  "/manifest": manifest,
-  "/llms.txt": llms,
-  "/llms-full.txt": llmsFull,
-  "/docs.json": docsJson,
-  "/style.css": styleCss,
-  "/.well-known/security.txt": securityTxt,
-};
-
-type Page = (req: Request) => Response | Promise<Response>;
-
-const server = Bun.serve({
-  port: PORT,
-  async fetch(req) {
-    const url = new URL(req.url);
-    const page = PAGES[url.pathname] ?? PAGES["/"];
-    try {
-      return await page(req);
-    } catch (err) {
-      console.error(err);
-      return textResponse("internal error", 500);
-    }
-  },
-});
-
-console.log(`[luminaweb-web] marketing on http://localhost:${server.port}`);
-
-/* ------------------------------------------------------------------ */
-/*  Response helpers                                                    */
-/* ------------------------------------------------------------------ */
-
-function textResponse(body: string, status = 200, extra: Record<string, string> = {}): Response {
-  return new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8", ...extra } });
-}
-
-function htmlResponse(body: string, status = 200, extra: Record<string, string> = {}): Response {
-  return new Response(body, {
-    status,
-    headers: {
-      "content-type": "text/html; charset=utf-8",
-      "cache-control": "public, max-age=60, s-maxage=300",
-      ...extra,
-    },
-  });
-}
-
-function jsonResponse(body: unknown, status = 200, extra: Record<string, string> = {}): Response {
-  return new Response(JSON.stringify(body, null, 2), {
-    status,
-    headers: { "content-type": "application/json; charset=utf-8", ...extra },
-  });
-}
-
-function readPublic(name: string): string | null {
-  const path = join(PUBLIC_DIR, name);
-  if (!existsSync(path)) return null;
-  return readFileSync(path, "utf-8");
-}
-
-/* ------------------------------------------------------------------ */
-/*  Shared layout                                                       */
-/* ------------------------------------------------------------------ */
-
-function page(opts: {
+export type PageMeta = {
   title: string;
   description: string;
   canonical: string;
-  body: string;
   pathname: string;
-}): string {
-  const css = readPublic("style.css") ?? "";
-  return `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>${escape(opts.title)} · Luminaweb</title>
-  <meta name="description" content="${escape(opts.description)}" />
-  <link rel="canonical" href="${escape(opts.canonical)}" />
-  <meta property="og:title" content="${escape(opts.title)}" />
-  <meta property="og:description" content="${escape(opts.description)}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="${escape(opts.canonical)}" />
-  <meta name="theme-color" content="#FBFBFA" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="/style.css" />
-  <style>${css}</style>
-</head>
-<body>
-${SHELL(opts.pathname, opts.body)}
-<script>
-(function(){
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
-    });
-  },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-})();
-</script>
-</body>
-</html>`;
-}
+};
 
-const SHELL = (pathname: string, body: string) => `
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="nav">
-    <div class="nav__inner">
-      <a class="nav__brand" href="/">
-        luminaweb
-        <span class="nav__tag">alpha</span>
-      </a>
-      <nav class="nav__links" aria-label="Primary">
-        <a href="/docs" ${pathname.startsWith("/docs") ? 'data-current="true"' : ""}>Docs</a>
-        <a href="/examples" ${pathname === "/examples" ? 'data-current="true"' : ""}>Examples</a>
-        <a href="/playground" ${pathname === "/playground" ? 'data-current="true"' : ""}>Playground</a>
-        <a href="/docs/deploy" ${pathname === "/docs/deploy" ? 'data-current="true"' : ""}>Deploy</a>
-      </nav>
-      <a class="nav__cta" href="/docs/quickstart">Get started</a>
-    </div>
-  </header>
-  <main id="main" class="main">${body}</main>
-  <footer class="foot">
-    <div class="foot__inner">
-      <div class="foot__brand">
-        luminaweb
-        <span class="foot__sub">An agent-native runtime for full-stack TypeScript apps.</span>
-      </div>
-      <div class="foot__cols">
-        <div>
-          <h4>Product</h4>
-          <a href="/docs">Docs</a>
-          <a href="/examples">Examples</a>
-          <a href="/playground">Playground</a>
-          <a href="/docs/deploy">Deploy</a>
-        </div>
-        <div>
-          <h4>Reference</h4>
-          <a href="/docs/reference">Reference</a>
-          <a href="/docs/capsule-api">Capsule API</a>
-          <a href="/docs/cli">CLI</a>
-          <a href="/llms.txt">llms.txt</a>
-        </div>
-        <div>
-          <h4>Connect</h4>
-          <a href="https://github.com/luminaweb/luminaweb">GitHub</a>
-          <a href="https://x.com/luminaweb">X / Twitter</a>
-          <a href="mailto:hi@luminaweb.app">hi@luminaweb.app</a>
-        </div>
-      </div>
-      <div class="foot__base">
-        <span>© 2026 Luminaweb</span>
-        <span>v0.1.0 · built on Bun · deployed on Railway Edge</span>
-      </div>
-    </div>
-  </footer>
+const DOCS_NAV = `
+  <nav class="docs__nav" aria-label="Docs">
+    <a href="/docs">Overview</a>
+    <a href="/docs/quickstart">Quickstart</a>
+    <a href="/docs/capsule-api">Capsule API</a>
+    <a href="/docs/reference">Reference</a>
+    <a href="/docs/cli">CLI</a>
+    <a href="/docs/deploy">Deploy</a>
+  </nav>
 `;
 
-/* ------------------------------------------------------------------ */
-/*  Pages                                                               */
-/* ------------------------------------------------------------------ */
-
-async function home(_req: Request): Promise<Response> {
-  const body = `
+export const homeBody = `
     <section class="hero">
       <div class="hero__ambient"><div class="hero__blob"></div></div>
       <div class="hero__content">
@@ -275,7 +111,7 @@ async function home(_req: Request): Promise<Response> {
         <span class="code__lang">TypeScript</span>
       </div>
       <div class="code__body">
-        <code><span class="kw">import</span> { <span class="sym">boolean, capsule, mutation, query, string, table</span> } <span class="kw">from</span> <span class="str">"@luminaweb/runtime/server"</span>;
+        <code><span class="kw">import</span> { <span class="sym">boolean, capsule, mutation, query, string, table</span> } <span class="kw">from</span> <span class="str">"luminaweb-runtime/server"</span>;
 
 <span class="kw">export default</span> <span class="fn">capsule</span>({
   schema: {
@@ -391,35 +227,8 @@ async function home(_req: Request): Promise<Response> {
       <a class="btn btn--primary btn--lg reveal reveal-d1" href="/docs/quickstart">Read the quickstart</a>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Ship the thing. Skip the plumbing.",
-      description:
-        "Luminaweb is an agent-native runtime for full-stack TypeScript apps. One directory, one port, one command. Deployed to the edge.",
-      canonical: "https://luminaweb.app/",
-      body,
-      pathname: "/",
-    }),
-  );
-}
 
-/* ------------------------------------------------------------------ */
-/*  Docs pages                                                          */
-/* ------------------------------------------------------------------ */
-
-const DOCS_NAV = `
-  <nav class="docs__nav" aria-label="Docs">
-    <a href="/docs">Overview</a>
-    <a href="/docs/quickstart">Quickstart</a>
-    <a href="/docs/capsule-api">Capsule API</a>
-    <a href="/docs/reference">Reference</a>
-    <a href="/docs/cli">CLI</a>
-    <a href="/docs/deploy">Deploy</a>
-  </nav>
-`;
-
-async function docs(_req: Request): Promise<Response> {
-  const body = `
+export const docsBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs</span>
@@ -458,19 +267,8 @@ shared/                # pure types &amp; helpers
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Luminaweb Docs",
-      description: "Luminaweb is an agent-native CLI and runtime for full-stack TypeScript apps.",
-      canonical: "https://luminaweb.app/docs",
-      body,
-      pathname: "/docs",
-    }),
-  );
-}
 
-async function docsQuickstart(_req: Request): Promise<Response> {
-  const body = `
+export const docsQuickstartBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs · quickstart</span>
@@ -502,19 +300,8 @@ luminaweb claim</code></pre>
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Quickstart",
-      description: "Install Luminaweb, scaffold a capsule, run it locally, deploy it.",
-      canonical: "https://luminaweb.app/docs/quickstart",
-      body,
-      pathname: "/docs/quickstart",
-    }),
-  );
-}
 
-async function docsReference(_req: Request): Promise<Response> {
-  const body = `
+export const docsReferenceBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs · reference</span>
@@ -526,7 +313,7 @@ async function docsReference(_req: Request): Promise<Response> {
         <h2>Capsule</h2>
         <p>A capsule is one complete app: source, server API, client UI, state, auth, logs, and deploy URL.</p>
         <h2>Server API</h2>
-        <pre><code>import { boolean, capsule, mutation, query, string, table } from "@luminaweb/runtime/server";</code></pre>
+        <pre><code>import { boolean, capsule, mutation, query, string, table } from "luminaweb-runtime/server";</code></pre>
         <h3>Tables</h3>
         <pre><code>todos: table({
   text: string(),
@@ -562,7 +349,7 @@ async function docsReference(_req: Request): Promise<Response> {
         <pre><code>import {
   Link, Route, Router, Routes, SignInWithGoogle,
   signOut, useAuth, useMutation, useNavigate, useParams, useQuery,
-} from "@luminaweb/runtime/client";</code></pre>
+} from "luminaweb-runtime/client";</code></pre>
         <h2>Auth</h2>
         <p>Every capsule starts with guest auth. <code>ctx.auth.userId</code> is the stable per-user identifier. <code>ctx.auth.provider</code> is <code>"guest"</code> or <code>"google"</code>.</p>
         <h2>Deploy</h2>
@@ -570,19 +357,8 @@ async function docsReference(_req: Request): Promise<Response> {
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Reference",
-      description: "Capsule runtime, server, data, client, auth, env, and deploy reference.",
-      canonical: "https://luminaweb.app/docs/reference",
-      body,
-      pathname: "/docs/reference",
-    }),
-  );
-}
 
-async function docsCapsuleApi(_req: Request): Promise<Response> {
-  const body = `
+export const docsCapsuleApiBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs · capsule api</span>
@@ -592,7 +368,7 @@ async function docsCapsuleApi(_req: Request): Promise<Response> {
       ${DOCS_NAV}
       <article class="prose reveal">
         <h2>Define the server</h2>
-        <pre><code>import { boolean, capsule, mutation, query, string, table } from "@luminaweb/runtime/server";
+        <pre><code>import { boolean, capsule, mutation, query, string, table } from "luminaweb-runtime/server";
 
 export default capsule({
   schema: { todos: table({ text: string(), done: boolean(), ownerId: string() }) },
@@ -615,7 +391,7 @@ export default capsule({
   },
 });</code></pre>
         <h2>Build the client</h2>
-        <pre><code>import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "@luminaweb/runtime/client";
+        <pre><code>import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "luminaweb-runtime/client";
 
 export function App() {
   const auth = useAuth();
@@ -628,19 +404,8 @@ export function App() {
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Capsule API",
-      description: "The API shape an agent uses when authoring a Luminaweb capsule.",
-      canonical: "https://luminaweb.app/docs/capsule-api",
-      body,
-      pathname: "/docs/capsule-api",
-    }),
-  );
-}
 
-async function docsCli(_req: Request): Promise<Response> {
-  const body = `
+export const docsCliBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs · cli</span>
@@ -676,19 +441,8 @@ luminaweb help</code></pre>
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "CLI",
-      description: "Every command, every flag for the Luminaweb CLI.",
-      canonical: "https://luminaweb.app/docs/cli",
-      body,
-      pathname: "/docs/cli",
-    }),
-  );
-}
 
-async function docsDeploy(_req: Request): Promise<Response> {
-  const body = `
+export const docsDeployBody = `
     <section class="doc">
       <header class="doc__head reveal">
         <span class="tag tag--blue">docs · deploy</span>
@@ -719,19 +473,8 @@ luminaweb logs my-app.luminaweb.app</code></pre>
       </article>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Deploy",
-      description: "Build, deploy, claim, and inspect a Luminaweb capsule on the edge.",
-      canonical: "https://luminaweb.app/docs/deploy",
-      body,
-      pathname: "/docs/deploy",
-    }),
-  );
-}
 
-async function examples(_req: Request): Promise<Response> {
-  const body = `
+export const examplesBody = `
     <section class="examples">
       <header class="doc__head reveal">
         <span class="tag tag--green">examples</span>
@@ -778,19 +521,8 @@ async function examples(_req: Request): Promise<Response> {
       </div>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Examples",
-      description: "Cookbook of Luminaweb capsules: todo, guestbook, chat, counter, webhook, blank.",
-      canonical: "https://luminaweb.app/examples",
-      body,
-      pathname: "/examples",
-    }),
-  );
-}
 
-async function playground(_req: Request): Promise<Response> {
-  const body = `
+export const playgroundBody = `
     <section class="play">
       <header class="doc__head reveal">
         <span class="tag tag--yellow">playground</span>
@@ -815,7 +547,7 @@ async function playground(_req: Request): Promise<Response> {
             <span class="play__tab">client/index.tsx</span>
             <span class="play__tab">shared/todo.ts</span>
           </div>
-          <pre class="play__code"><code><span class="kw">import</span> { boolean, capsule, mutation, query, string, table } <span class="kw">from</span> <span class="str">"@luminaweb/runtime/server"</span>;
+          <pre class="play__code"><code><span class="kw">import</span> { boolean, capsule, mutation, query, string, table } <span class="kw">from</span> <span class="str">"luminaweb-runtime/server"</span>;
 
 <span class="kw">export default</span> capsule({
   schema: {
@@ -840,127 +572,3 @@ async function playground(_req: Request): Promise<Response> {
       </div>
     </section>
   `;
-  return htmlResponse(
-    page({
-      title: "Playground",
-      description: "A live Luminaweb capsule running in your browser.",
-      canonical: "https://luminaweb.app/playground",
-      body,
-      pathname: "/playground",
-    }),
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Machine-readable                                                    */
-/* ------------------------------------------------------------------ */
-
-async function manifest(_req: Request): Promise<Response> {
-  return jsonResponse({
-    name: "Luminaweb",
-    url: "https://luminaweb.app",
-    description: "Luminaweb is an alpha-stage agent-native CLI and runtime for full-stack TypeScript apps.",
-    sourceRepository: "https://github.com/luminaweb/luminaweb",
-    agentEntrypoints: {
-      manifest: "/docs.json",
-      llms: "/llms.txt",
-      llmsFull: "/llms-full.txt",
-    },
-    pages: [
-      { title: "Luminaweb Docs", section: "Docs", url: "/docs" },
-      { title: "Quickstart", section: "Docs", url: "/docs/quickstart" },
-      { title: "Reference", section: "Docs", url: "/docs/reference" },
-      { title: "Capsule API", section: "Docs", url: "/docs/capsule-api" },
-      { title: "CLI", section: "Docs", url: "/docs/cli" },
-      { title: "Deploy", section: "Docs", url: "/docs/deploy" },
-      { title: "Examples", section: "Examples", url: "/examples" },
-    ],
-  });
-}
-
-async function docsJson(_req: Request): Promise<Response> {
-  return jsonResponse({
-    name: "Luminaweb Docs",
-    url: "https://luminaweb.app/docs",
-    description: "Public alpha documentation for Luminaweb, an agent-native CLI and runtime for full-stack TypeScript apps.",
-    sourceRepository: "https://github.com/luminaweb/luminaweb",
-    agentEntrypoints: { manifest: "/docs.json", llms: "/llms.txt", llmsFull: "/llms-full.txt" },
-    pages: [
-      { title: "Luminaweb Docs", url: "/docs" },
-      { title: "Quickstart", url: "/docs/quickstart" },
-      { title: "Reference", url: "/docs/reference" },
-      { title: "Capsule API", url: "/docs/capsule-api" },
-      { title: "CLI", url: "/docs/cli" },
-      { title: "Deploy", url: "/docs/deploy" },
-    ],
-  });
-}
-
-async function llms(_req: Request): Promise<Response> {
-  return textResponse(`# Luminaweb
-
-> Luminaweb is an alpha-stage agent-native CLI and runtime for full-stack TypeScript apps.
-
-## Docs
-
-- [Luminaweb Docs](https://luminaweb.app/docs)
-- [Quickstart](https://luminaweb.app/docs/quickstart)
-- [Reference](https://luminaweb.app/docs/reference)
-- [Capsule API](https://luminaweb.app/docs/capsule-api)
-- [CLI](https://luminaweb.app/docs/cli)
-- [Deploy](https://luminaweb.app/docs/deploy)
-
-## Machine-readable
-
-- [docs.json](https://luminaweb.app/docs.json)
-- [llms-full.txt](https://luminaweb.app/llms-full.txt)
-`);
-}
-
-async function llmsFull(_req: Request): Promise<Response> {
-  const pages = [docs, docsQuickstart, docsReference, docsCapsuleApi, docsCli, docsDeploy];
-  const blocks: string[] = [];
-  for (const p of pages) {
-    try {
-      const res = await p(new Request("http://localhost/"));
-      const text = await res.text();
-      blocks.push(stripHtml(text));
-    } catch {
-      blocks.push("(unavailable)");
-    }
-  }
-  return textResponse(`# Luminaweb — full text\n\n${blocks.join("\n\n---\n\n")}\n`);
-}
-
-async function securityTxt(_req: Request): Promise<Response> {
-  return textResponse("Contact: mailto:security@luminaweb.app\nExpires: 2027-01-01T00:00:00.000Z\n");
-}
-
-async function styleCss(_req: Request): Promise<Response> {
-  const css = readPublic("style.css");
-  if (!css) return textResponse("/* not found */", 404);
-  return new Response(css, { headers: { "content-type": "text/css; charset=utf-8" } });
-}
-
-/* ------------------------------------------------------------------ */
-/*  Utilities                                                           */
-/* ------------------------------------------------------------------ */
-
-function escape(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => {
-    if (c === "&") return "&amp;";
-    if (c === "<") return "&lt;";
-    if (c === ">") return "&gt;";
-    if (c === '"') return "&quot;";
-    return "&#39;";
-  });
-}
-
-function stripHtml(html: string): string {
-  return html
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
