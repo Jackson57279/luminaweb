@@ -26,10 +26,7 @@ COPY examples/counter/package.json ./examples/counter/
 COPY examples/webhook/package.json ./examples/webhook/
 COPY examples/blank/package.json ./examples/blank/
 
-RUN bun install --frozen-lockfile \
-      --filter='./apps/*' --filter='./packages/*' --filter='./examples/*' || \
-    bun install \
-      --filter='./apps/*' --filter='./packages/*' --filter='./examples/*'
+RUN bun install --frozen-lockfile || bun install
 
 # =====================================================================
 FROM deps AS build
@@ -150,14 +147,18 @@ EXPOSE 3000
 CMD ["sh", "-c", "if [ -f build/index.js ]; then bun build/index.js; else bun src/index.ts; fi"]
 
 # =====================================================================
-FROM oven/bun:${BUN_VERSION}-alpine AS web
-WORKDIR /app
+# Luminaweb marketing + platform site — Next.js app served under Bun.
+FROM build AS web
+WORKDIR /repo/apps/web
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV LUMINAWEB_DATA_DIR=/data
 
-COPY apps/web/ ./apps/web/
+# Build the Next.js production bundle. The auth/platform/runtime code uses
+# bun:sqlite + Bun.* APIs, so the server is run with `bun --bun next`.
+RUN bun --bun next build
 
-USER bun
+RUN mkdir -p /data
 EXPOSE 3000
-CMD ["bun", "apps/web/server.ts"]
+CMD ["bun", "--bun", "next", "start", "--port", "3000"]

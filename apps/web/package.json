@@ -4,11 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --hot server.ts",
-    "build": "bun build server.ts --target=bun --outdir=dist --minify",
-    "start": "bun server.ts"
+    "dev": "bun --bun next dev --port ${PORT:-3000}",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start --port ${PORT:-3000}"
   },
   "dependencies": {
-    "@luminaweb/runtime": "workspace:*"
+    "better-auth": "^1.6.14",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "luminaweb-runtime": "workspace:*",
+    "next": "^15.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.6.3"
   }
 }
