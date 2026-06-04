@@ -1,0 +1,23 @@
+apps/web/next.config.mjs
+  s_aa9ceb803ddc89::t_3cc7efe49c2a4d 5,14-15
+apps/web/package.json
+  s_aa9ceb803ddc89::t_0a5bdbc74a4b50 14
+apps/web/lib/platform.ts
+  s_aa9ceb803ddc89::t_43a73319039900 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "cc492d165b1d90e52d5e91bbc4df1b25db6a7ff5",
+  "prompts": {},
+  "sessions": {
+    "s_aa9ceb803ddc89": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4ce1fc56-efb7-459d-86ab-2889bf393364",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
