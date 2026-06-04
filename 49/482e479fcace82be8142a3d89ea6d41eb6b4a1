@@ -1,0 +1,89 @@
+examples/chat/server/index.ts
+  ai_agent 1
+examples/todo/package.json
+  ai_agent 7-9,12
+examples/counter/client/index.tsx
+  ai_agent 1-2
+examples/blank/package.json
+  ai_agent 7-9,12
+packages/cli/src/commands/deploy.ts
+  ai_agent 8,11,17-18,32-39,41,45-58,60-61,63,65-86
+packages/runtime/src/index.ts
+  ai_agent 2
+railway.json
+  ai_agent 9
+apps/edge/package.json
+  ai_agent 2,12
+examples/webhook/package.json
+  ai_agent 7-9,12
+examples/counter/server/index.ts
+  ai_agent 1
+examples/guestbook/client/index.tsx
+  ai_agent 1-2
+packages/cli/src/commands/claim.ts
+  ai_agent 10,14-18,24,26-27,31-45
+examples/webhook/server/index.ts
+  ai_agent 10-11
+examples/guestbook/package.json
+  ai_agent 7-9,12
+package.json
+  ai_agent 3,14,24,30-36
+apps/web/next.config.mjs
+  s_aa9ceb803ddc89::t_cec918cee4f36f 5,14-15
+packages/cli/src/commands/build.ts
+  ai_agent 82
+packages/runtime/package.json
+  ai_agent 2
+packages/cli/package.json
+  ai_agent 3,7,18-25,29
+examples/guestbook/server/index.ts
+  ai_agent 1
+examples/todo/server/index.ts
+  ai_agent 1
+apps/web/package.json
+  s_aa9ceb803ddc89::t_3565a42b72d263 15
+examples/webhook/client/index.tsx
+  ai_agent 1-2
+examples/counter/package.json
+  ai_agent 7-9,12
+packages/cli/src/index.ts
+  ai_agent 29,74-75
+packages/cli/src/session.ts
+  ai_agent 1-25
+examples/chat/package.json
+  ai_agent 7-9,12
+packages/cli/src/commands/help.ts
+  ai_agent 37
+examples/todo/client/index.tsx
+  ai_agent 1-2
+packages/cli/src/commands/login.ts
+  ai_agent 1-18
+apps/edge/src/index.ts
+  ai_agent 31-33
+examples/chat/client/index.tsx
+  ai_agent 1-2
+examples/blank/client/index.tsx
+  ai_agent 1-2
+apps/web/lib/platform.ts
+  s_aa9ceb803ddc89::t_c0f98d489ecb91 4
+packages/cli/src/commands/inspect.ts
+  ai_agent 21
+examples/blank/server/index.ts
+  ai_agent 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "49482e479fcace82be8142a3d89ea6d41eb6b4a1",
+  "prompts": {},
+  "sessions": {
+    "s_aa9ceb803ddc89": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4ce1fc56-efb7-459d-86ab-2889bf393364",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
