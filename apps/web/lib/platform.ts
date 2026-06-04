@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { Database } from "bun:sqlite";
-import { createHandler, createSqliteDatabase, type LogEntry } from "@zapdev/runtime/server";
+import { createHandler, createSqliteDatabase, type LogEntry } from "luminaweb-runtime/server";
 
 export type DeployRecord = {
   id: string;

@@ -1,5 +1,5 @@
-import { render } from "@zapdev/runtime/client";
-import { useQuery } from "@zapdev/runtime/client";
+import { render } from "luminaweb-runtime/client";
+import { useQuery } from "luminaweb-runtime/client";
 import type { Hit } from "../shared/webhook.js";
 
 export function App() {

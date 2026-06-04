@@ -1,4 +1,4 @@
-import { capsule, query } from "@zapdev/runtime/server";
+import { capsule, query } from "luminaweb-runtime/server";
 
 /**
  * The smallest possible capsule. One query, no schema, no mutations.

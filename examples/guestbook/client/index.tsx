@@ -1,5 +1,5 @@
-import { render } from "@zapdev/runtime/client";
-import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "@zapdev/runtime/client";
+import { render } from "luminaweb-runtime/client";
+import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "luminaweb-runtime/client";
 import type { Entry } from "../shared/guestbook.js";
 import { cleanEntry } from "../shared/guestbook.js";
 

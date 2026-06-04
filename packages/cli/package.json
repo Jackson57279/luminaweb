@@ -1,10 +1,10 @@
 {
   "name": "luminaweb",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Agent-native runtime for full-stack TypeScript apps. Ship the thing. Skip the plumbing.",
   "type": "module",
   "bin": {
-    "luminaweb": "./bin/luminaweb.js"
+    "luminaweb": "bin/luminaweb.js"
   },
   "files": [
     "bin/",
@@ -15,11 +15,18 @@
     "dev": "bun --watch src/index.ts",
     "build": "bun build src/index.ts --target=bun --outfile=dist/index.js --minify"
   },
-  "keywords": ["capsule", "runtime", "typescript", "fullstack", "bun", "luminaweb"],
+  "keywords": [
+    "capsule",
+    "runtime",
+    "typescript",
+    "fullstack",
+    "bun",
+    "luminaweb"
+  ],
   "homepage": "https://luminaweb.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jackson57279/luminaweb"
+    "url": "git+https://github.com/Jackson57279/luminaweb.git"
   },
   "license": "MIT",
   "engines": {

@@ -79,7 +79,7 @@ export async function buildCommand(ctx: Ctx) {
     name: readName(dir),
     target,
     builtAt: new Date().toISOString(),
-    runtime: "@luminaweb/runtime",
+    runtime: "luminaweb-runtime",
     version: "0.1.0",
   };
   writeFileSync(join(outDir, "manifest.json"), JSON.stringify(manifest, null, 2));

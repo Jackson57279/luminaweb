@@ -26,6 +26,7 @@ import { inspectCommand } from "./commands/inspect.js";
 import { dbCommand } from "./commands/db.js";
 import { logsCommand } from "./commands/logs.js";
 import { authCommand } from "./commands/auth.js";
+import { loginCommand } from "./commands/login.js";
 import { runManyCommand } from "./commands/run-many.js";
 import { helpCommand, versionCommand } from "./commands/help.js";
 import { out } from "./utils.js";
@@ -70,6 +71,8 @@ async function main() {
         return await logsCommand(ctx);
       case "auth":
         return await authCommand(ctx);
+      case "login":
+        return await loginCommand(ctx);
       case "run-many":
         return await runManyCommand(ctx);
       case "version":

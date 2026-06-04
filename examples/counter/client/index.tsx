@@ -1,5 +1,5 @@
-import { render } from "@zapdev/runtime/client";
-import { useMutation, useQuery } from "@zapdev/runtime/client";
+import { render } from "luminaweb-runtime/client";
+import { useMutation, useQuery } from "luminaweb-runtime/client";
 import type { CounterState } from "../shared/counter.js";
 
 export function App() {

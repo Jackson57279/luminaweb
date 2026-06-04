@@ -11,8 +11,8 @@
   "dependencies": {
     "better-auth": "^1.6.14",
     "class-variance-authority": "^0.7.1",
-    "@zapdev/runtime": "workspace:*",
     "clsx": "^2.1.1",
+    "luminaweb-runtime": "workspace:*",
     "next": "^15.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

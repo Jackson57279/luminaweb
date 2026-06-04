@@ -1,5 +1,5 @@
 /**
- * @zapdev/runtime — public surface.
+ * luminaweb-runtime — public surface.
  *
  * This package ships three entrypoints:
  *   - zapdev/server  : capsule, query, mutation, endpoint, table, field types

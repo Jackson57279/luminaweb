@@ -1,5 +1,5 @@
 {
-  "name": "@zapdev/edge",
+  "name": "@luminaweb/edge",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "start": "bun src/index.ts"
   },
   "dependencies": {
-    "@zapdev/runtime": "workspace:*",
+    "luminaweb-runtime": "workspace:*",
     "preact": "^10.24.3"
   }
 }

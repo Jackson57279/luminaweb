@@ -1,4 +1,4 @@
-import { capsule, mutation, number, query, string, table } from "@zapdev/runtime/server";
+import { capsule, mutation, number, query, string, table } from "luminaweb-runtime/server";
 
 /**
  * A single global counter. No auth, no per-user filtering.

@@ -6,7 +6,7 @@
     "target": "web"
   },
   "deploy": {
-    "startCommand": "bun apps/web/server.ts",
+    "startCommand": "cd apps/web && bun --bun next start --port ${PORT:-3000}",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",

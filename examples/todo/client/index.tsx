@@ -1,5 +1,5 @@
-import { render } from "@zapdev/runtime/client";
-import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "@zapdev/runtime/client";
+import { render } from "luminaweb-runtime/client";
+import { useAuth, useMutation, useQuery, SignInWithGoogle, signOut } from "luminaweb-runtime/client";
 import type { Todo } from "../shared/todo.js";
 import { cleanTodoText } from "../shared/todo.js";
 

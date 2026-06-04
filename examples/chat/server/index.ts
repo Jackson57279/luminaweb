@@ -1,4 +1,4 @@
-import { capsule, mutation, query, string, table } from "@zapdev/runtime/server";
+import { capsule, mutation, query, string, table } from "luminaweb-runtime/server";
 
 /**
  * A shared chat room. Demonstrates:

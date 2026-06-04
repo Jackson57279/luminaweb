@@ -18,7 +18,7 @@ export async function inspectCommand(ctx: Ctx) {
   // Stub manifest. Real implementation calls the edge.
   out.plain("  name:        capsule");
   out.plain("  version:     0.1.0");
-  out.plain("  runtime:     @luminaweb/runtime 0.1.0");
+  out.plain("  runtime:     luminaweb-runtime 0.1.0");
   out.plain("  tables:      todos, messages");
   out.plain("  queries:     todos, messages");
   out.plain("  mutations:   addTodo, setTodoDone, clearDone, sendMessage");

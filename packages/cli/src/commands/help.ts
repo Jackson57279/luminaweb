@@ -34,6 +34,7 @@ const COMMANDS = [
   { cmd: "build [dir] --target edge", desc: "Build a deployable bundle into dist/" },
   { cmd: "deploy [dir] [--public]", desc: "Push the bundle to Luminaweb Edge" },
   { cmd: "claim [dir]", desc: "Claim a deploy for server env + fetch" },
+  { cmd: "login --token <token>", desc: "Connect this terminal to your Luminaweb account" },
   { cmd: "inspect <id|url>", desc: "Inspect a deployed capsule" },
   { cmd: "db list|dump <id|url>", desc: "List tables or dump rows" },
   { cmd: "logs <id|url>", desc: "Stream structured logs" },

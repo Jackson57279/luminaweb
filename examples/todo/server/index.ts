@@ -1,4 +1,4 @@
-import { boolean, capsule, mutation, query, string, table } from "@zapdev/runtime/server";
+import { boolean, capsule, mutation, query, string, table } from "luminaweb-runtime/server";
 
 /**
  * A per-user todo capsule. Demonstrates:

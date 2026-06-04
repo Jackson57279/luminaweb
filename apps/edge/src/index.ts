@@ -28,9 +28,9 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { createHandler, type LogEntry } from "@zapdev/runtime/server";
-import { createSqliteDatabase } from "@zapdev/runtime/server/sqlite";
-import { MemoryDatabase } from "@zapdev/runtime/server/memory";
+import { createHandler, type LogEntry } from "luminaweb-runtime/server";
+import { createSqliteDatabase } from "luminaweb-runtime/server/sqlite";
+import { MemoryDatabase } from "luminaweb-runtime/server/memory";
 
 const PORT = Number(process.env.PORT ?? process.env.ZAPDEV_PORT ?? 3000);
 const NAME = process.env.ZAPDEV_NAME ?? "capsule";

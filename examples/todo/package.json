@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "zapdev dev",
-    "build": "zapdev build --target edge",
-    "deploy": "zapdev deploy"
+    "dev": "luminaweb dev",
+    "build": "luminaweb build --target edge",
+    "deploy": "luminaweb deploy"
   },
   "dependencies": {
-    "@zapdev/runtime": "workspace:*"
+    "luminaweb-runtime": "workspace:*"
   }
 }

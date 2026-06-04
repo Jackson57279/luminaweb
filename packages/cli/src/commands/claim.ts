@@ -7,23 +7,42 @@
 
 import { resolve } from "node:path";
 import type { Ctx } from "../ctx.js";
+import { getConfiguredToken } from "../session.js";
 import { out } from "../utils.js";
 
 export async function claimCommand(ctx: Ctx) {
-  const dir = resolve(process.cwd(), ctx.args[1] && !ctx.args[1].startsWith("--") ? ctx.args[1] : ".");
+  const target = ctx.args[1] && !ctx.args[1].startsWith("--") ? ctx.args[1] : ".";
+  const dir = resolve(process.cwd(), target);
+  const deployId = target.match(/dep_[a-zA-Z0-9]+/)?.[0];
+  const edgeUrl = process.env.LUMINAWEB_EDGE_URL ?? "https://luminaweb.app";
+  const token = getConfiguredToken();
 
   out.banner("▌▌  luminaweb claim");
   out.step(`directory: ${dir}`);
   out.plain("");
 
-  if (!process.env.LUMINAWEB_TOKEN) {
+  if (!token) {
     out.err("not authenticated");
-    out.plain("  set LUMINAWEB_TOKEN to claim this deploy.");
-    out.plain("  get a token at https://luminaweb.app/account");
+    out.plain("  open https://luminaweb.app/account and create a CLI token.");
+    out.plain("  then run: luminaweb login --token lw_...");
     process.exit(1);
   }
 
-  await new Promise((r) => setTimeout(r, 400));
+  if (!deployId) {
+    out.err("missing deploy id");
+    out.plain("  usage: luminaweb claim dep_...");
+    process.exit(1);
+  }
+
+  const res = await fetch(new URL(`/api/deploy/${deployId}/claim`, edgeUrl), {
+    method: "POST",
+    headers: { authorization: `Bearer ${token}` },
+  });
+  const body = await res.json().catch(() => null) as { error?: string } | null;
+  if (!res.ok) {
+    out.err(`claim failed: ${body?.error ?? res.statusText}`);
+    process.exit(1);
+  }
   out.ok("deploy claimed");
   out.plain("  → server env sync enabled");
   out.plain("  → outbound fetch enabled");

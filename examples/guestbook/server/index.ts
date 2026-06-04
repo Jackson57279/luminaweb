@@ -1,4 +1,4 @@
-import { capsule, mutation, query, string, table } from "@zapdev/runtime/server";
+import { capsule, mutation, query, string, table } from "luminaweb-runtime/server";
 
 /**
  * A shared guestbook feed where every signed entry stores author

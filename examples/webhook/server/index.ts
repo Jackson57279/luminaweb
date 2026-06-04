@@ -7,8 +7,8 @@ import {
   table,
   textResponse,
   unauthorized,
-} from "@zapdev/runtime/server";
-import { json as jsonField } from "@zapdev/runtime/shared";
+} from "luminaweb-runtime/server";
+import { json as jsonField } from "luminaweb-runtime/shared";
 
 /**
  * A public webhook receiver. Demonstrates:
