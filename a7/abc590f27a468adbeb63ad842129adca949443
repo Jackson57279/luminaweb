@@ -1,0 +1,114 @@
+examples/dashboard/client/index.tsx
+  s_783d12cd8e93cf::t_47262ac505231b 2,20-21,24,26-54,57-86,88-114,119-123,126,129-139,143-144,147-150,153-158,160-163,169-171,174-182,189-199,202-206,209-213,216-219,228,230-239,242-244,249,252,254-276,291-321
+  s_783d12cd8e93cf::t_18bde5bb0b6995 1,3-19,22-23,25,55-56,87,115-118,124-125,127-128,140-142,145-146,151-152,159,164-168,172-173,183-188,200-201,207-208,214-215,220-227,229,240-241,245-248,250-251,253,277-290,322-333
+apps/web/lib/auth.ts
+  s_bcc6d4862d5247::t_033cd201fb91f8 68-73,75,77-85,92
+  s_bcc6d4862d5247::t_5fb7bcebee4390 74,76
+  s_bcc6d4862d5247::t_e7c212683249a8 98-103
+examples/dashboard/client/bundle.css
+  s_783d12cd8e93cf::t_cca4f89b10bda2 1,3-6,9-12,23-24,44,53-54,56,69-72,74-75,78,80,82,102,113,125,127,133,136,149,153-158,160-161,165,170,204-205,223-225,228,231-232,251-253,277
+  s_783d12cd8e93cf::t_9ae81e3264d17f 2,7-8,13-22,25-43,45-52,55,57-68,73,76-77,79,81,83-101,103-112,114-124,126,128-132,134-135,137-148,150-152,159,162-164,166-169,171-203,206-222,226-227,229-230,233-250,254-276
+packages/cli/src/commands/build.ts
+  s_783d12cd8e93cf::t_930a3e0d318f9f 17-20
+  s_783d12cd8e93cf::t_0602e9fe9def3e 107
+  s_783d12cd8e93cf::t_530f54be5337ac 15
+  s_783d12cd8e93cf::t_5da80d630dbc94 85-93
+  s_783d12cd8e93cf::t_bf1e67924ab130 56-58
+Dockerfile
+  s_783d12cd8e93cf::t_b130c9d06d0b9a 176
+  s_783d12cd8e93cf::t_507d11207e8567 28
+  s_783d12cd8e93cf::t_e7c9e037ec5fe2 129-130
+  s_783d12cd8e93cf::t_c902e9c73a045e 127-128,131-142
+  s_783d12cd8e93cf::t_04a754ff4223b7 175,177,184
+apps/web/scripts/seed-showcase-deploy.ts
+  s_783d12cd8e93cf::t_fcbd6d31c74159 45,58,61
+  s_783d12cd8e93cf::t_b8a4556127cc44 78
+  s_783d12cd8e93cf::t_a855ca4b08e196 1-4,6,8-9,11-44,57,62-69,72-77
+  s_783d12cd8e93cf::t_e64dda77fe8644 49
+  s_783d12cd8e93cf::t_f41c2a55c8f1aa 46-48,52-54
+  s_783d12cd8e93cf::t_c61e2e7c960e9a 7
+  s_783d12cd8e93cf::t_a7cf5204abd73a 10
+  s_783d12cd8e93cf::t_1433d15bdb5019 50-51,55
+  s_783d12cd8e93cf::t_8cf4d070e21865 56,70-71
+  s_783d12cd8e93cf::t_82ccaaf6b4addb 5
+  s_783d12cd8e93cf::t_aa2f314d4b6427 59-60
+  s_783d12cd8e93cf::t_8fbed7b1d307dd 79-85
+apps/web/lib/platform.ts
+  s_783d12cd8e93cf::t_9cec234e0bb16d 185
+  s_783d12cd8e93cf::t_cc7cab971b8c35 155-159
+  s_783d12cd8e93cf::t_fdb7f4da5c4858 83-93
+  s_783d12cd8e93cf::t_0999a05419f6fa 129-130,132-135
+  s_783d12cd8e93cf::t_9da68aeee741eb 131
+  s_783d12cd8e93cf::t_0da7310324713b 168,170-174,182
+  s_783d12cd8e93cf::t_36417a62507027 169
+  s_783d12cd8e93cf::t_f25ea6516091f4 5-10
+  s_783d12cd8e93cf::t_31ffb9ba0edead 3
+  s_783d12cd8e93cf::t_0a5da3f8310793 1
+  s_783d12cd8e93cf::t_1cdacaa4264841 183
+  s_783d12cd8e93cf::t_ee6f807ea3a4f7 179-181
+packages/runtime/src/client/index.tsx
+  s_783d12cd8e93cf::t_e23fbcd19c43c3 57
+  s_783d12cd8e93cf::t_89c59b80a0121f 107
+  s_783d12cd8e93cf::t_d13fd16a059dec 144
+  s_783d12cd8e93cf::t_3285f4330a19ba 205-216,218-226
+  s_783d12cd8e93cf::t_ae58de63cc3d40 94
+  s_783d12cd8e93cf::t_dd779911010f50 23-44
+examples/dashboard/.env.luminaweb.server
+  s_783d12cd8e93cf::t_ea1254dfa101ac 1
+.env.example
+  ai_agent 1-3
+examples/dashboard/package.json
+  s_783d12cd8e93cf::t_08c7a56d598722 1-14
+packages/cli/src/commands/help.ts
+  s_783d12cd8e93cf::t_30217207f83410 21
+packages/cli/src/commands/new.ts
+  s_783d12cd8e93cf::t_8da866ff20d964 27
+apps/web/lib/content.ts
+  s_783d12cd8e93cf::t_d75f588d69fdca 485-490
+apps/web/app/examples/page.tsx
+  s_783d12cd8e93cf::t_56597782743422 6
+packages/runtime/src/server/edge.ts
+  s_783d12cd8e93cf::t_94d21681a01765 1-2,4-20,22,27,31-57
+  s_783d12cd8e93cf::t_a728092ac8b706 3,21,23-26,28-30
+examples/dashboard/shared/documents.ts
+  s_783d12cd8e93cf::t_bbf298c91e780d 1-42
+packages/cli/bin/luminaweb.cjs
+  s_783d12cd8e93cf::t_75af71d24e6875 1-13
+packages/cli/package.json
+  s_783d12cd8e93cf::t_782bc2ce517b5a 7
+examples/dashboard/server/index.ts
+  s_783d12cd8e93cf::t_25bbd9a59a5580 1
+  s_783d12cd8e93cf::t_1f66f829369073 3,15-30,32-36,38-43,46,63-75,78-88,90
+  s_783d12cd8e93cf::t_ec42d6245bbae8 37,44-45,47-62
+  s_783d12cd8e93cf::t_abe8d597961f63 2,4-14
+  s_783d12cd8e93cf::t_3b9e16a2af1194 31
+  s_783d12cd8e93cf::t_3bbd59c075ed04 76-77,89
+packages/runtime/package.json
+  s_783d12cd8e93cf::t_078ef70bafac56 11
+apps/web/app/d/[id]/[[...path]]/route.ts
+  s_783d12cd8e93cf::t_ac39a0d4ddbad2 5,13-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "a7abc590f27a468adbeb63ad842129adca949443",
+  "prompts": {},
+  "sessions": {
+    "s_783d12cd8e93cf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "61f9709f-b525-4dda-9957-edda24f3ef55",
+        "model": "default"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    },
+    "s_bcc6d4862d5247": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "705b8901-2f2b-48a2-8bec-99a5276bf05b",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
