@@ -1,0 +1,19 @@
+apps/web/lib/content.ts
+  s_783d12cd8e93cf::t_ed10aa07fc91f7 485
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "ccedb1245d07ffe8f97e084ac0432d6f425c3f18",
+  "prompts": {},
+  "sessions": {
+    "s_783d12cd8e93cf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "61f9709f-b525-4dda-9957-edda24f3ef55",
+        "model": "default"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
