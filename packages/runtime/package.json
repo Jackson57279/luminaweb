@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./server": "./src/server/index.ts",
+    "./server/edge": "./src/server/edge.ts",
     "./server/sqlite": "./src/server/sqlite.ts",
     "./server/memory": "./src/server/memory.ts",
     "./server/handler": "./src/server/handler.ts",

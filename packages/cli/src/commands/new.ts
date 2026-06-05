@@ -24,7 +24,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const TEMPLATES_DIR = resolve(__dirname, "../../../../examples");
 
-const TEMPLATES = ["todo", "guestbook", "chat", "counter", "blank"] as const;
+const TEMPLATES = ["todo", "guestbook", "chat", "counter", "blank", "dashboard"] as const;
 type Template = (typeof TEMPLATES)[number];
 
 export async function newCommand(ctx: Ctx) {

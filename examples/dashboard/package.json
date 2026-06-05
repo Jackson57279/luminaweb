@@ -1,0 +1,14 @@
+{
+  "name": "shadcn-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "luminaweb dev",
+    "build": "luminaweb build --target edge",
+    "deploy": "luminaweb deploy --public"
+  },
+  "dependencies": {
+    "luminaweb-runtime": "workspace:*"
+  }
+}

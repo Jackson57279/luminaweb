@@ -65,17 +65,42 @@ function authDb(): Database {
   return db;
 }
 
+/** Origins allowed to call the auth API. Better Auth rejects any request whose
+ *  Origin header is not the baseURL or listed here (e.g. the www subdomain when
+ *  baseURL is the apex domain). Extra origins can be supplied via
+ *  BETTER_AUTH_TRUSTED_ORIGINS as a comma-separated list. */
+function trustedOrigins() {
+  const origins = new Set<string>([
+    // Apex + any subdomain of the wildcard domain (www, app, previews, etc.).
+    "https://luminaweb.app",
+    "https://*.luminaweb.app",
+  ]);
+  if (process.env.BETTER_AUTH_URL) origins.add(process.env.BETTER_AUTH_URL);
+  for (const o of (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "").split(",")) {
+    const trimmed = o.trim();
+    if (trimmed) origins.add(trimmed);
+  }
+  return [...origins];
+}
+
 function buildAuth() {
   return betterAuth({
     appName: "Luminaweb",
     database: authDb(),
     secret: authSecret(),
     baseURL: process.env.BETTER_AUTH_URL,
+    trustedOrigins: trustedOrigins(),
     emailAndPassword: {
       enabled: true,
     },
     advanced: {
       useSecureCookies: process.env.NODE_ENV === "production",
+      // Share the session cookie across every *.luminaweb.app subdomain so a
+      // user signed in on one subdomain stays signed in on the others.
+      crossSubDomainCookies:
+        process.env.NODE_ENV === "production"
+          ? { enabled: true, domain: ".luminaweb.app" }
+          : undefined,
       database: {
         generateId: () => crypto.randomUUID(),
       },

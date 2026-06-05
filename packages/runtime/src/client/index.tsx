@@ -20,6 +20,28 @@ export type { AuthClient, AuthIdentity };
 /*  Transport                                                                */
 /* ------------------------------------------------------------------------ */
 
+declare global {
+  interface Window {
+    __LUMINAWEB_BASE__?: string;
+  }
+}
+
+/** Deploy prefix when hosted under /d/:id (platform). Empty on edge root. */
+function runtimeBase(): string {
+  if (typeof window === "undefined") return "";
+  const injected = window.__LUMINAWEB_BASE__;
+  if (injected) return injected.replace(/\/$/, "");
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  if (parts[0] === "d" && parts[1]) return `/d/${parts[1]}`;
+  return "";
+}
+
+function zapPath(path: string): string {
+  const base = runtimeBase();
+  const sub = path.startsWith("/") ? path : `/${path}`;
+  return `${base}${sub}`;
+}
+
 const sessionListeners = new Set<(auth: AuthClient) => void>();
 let sessionCache: AuthClient | null = null;
 let sessionInflight: Promise<AuthClient> | null = null;
@@ -32,7 +54,7 @@ function notifySession(auth: AuthClient) {
 async function fetchSession(): Promise<AuthClient> {
   if (sessionCache && !sessionCache.isLoading) return sessionCache;
   if (sessionInflight) return sessionInflight;
-  sessionInflight = fetch("/__zap__/auth/me", { credentials: "same-origin" })
+  sessionInflight = fetch(zapPath("/__zap__/auth/me"), { credentials: "same-origin" })
     .then((r) => r.json() as Promise<AuthIdentity>)
     .then((identity) => ({ ...identity, isLoading: false }) satisfies AuthClient)
     .catch(() => ({
@@ -69,7 +91,7 @@ export function useAuth(): AuthClient {
 }
 
 export function signOut(): Promise<void> {
-  return fetch("/__zap__/auth/sign-out", { method: "POST" }).then(() => {
+  return fetch(zapPath("/__zap__/auth/sign-out"), { method: "POST" }).then(() => {
     notifySession({
       userId: "guest:anonymous",
       displayName: "Guest",
@@ -82,7 +104,7 @@ export function signOut(): Promise<void> {
 }
 
 export function signInWithGoogle(): void {
-  window.location.href = "/__zap__/auth/google/start";
+  window.location.href = zapPath("/__zap__/auth/google/start");
 }
 
 export function SignInWithGoogle({ class: className = "" }: { class?: string }) {
@@ -119,7 +141,7 @@ async function callRpc<T>(kind: "query" | "mutation", name: string, args: unknow
     headers: { "content-type": "application/json" },
     body: JSON.stringify(args ?? []),
   };
-  const res = await fetch(path, init);
+  const res = await fetch(zapPath(path), init);
   if (!res.ok) {
     const message = await res.text().catch(() => res.statusText);
     throw new Error(`${kind} ${name} failed: ${res.status} ${message}`);
@@ -180,20 +202,28 @@ export function useMutation<TArgs extends unknown[], TResult>(
   return useCallback(
     async (...args: TArgs) => {
       const result = await callRpc<TResult>("mutation", name, args);
-      // Invalidate any cached queries that match the mutation name heuristically.
-      for (const key of queryCache.keys()) {
-        if (key.startsWith(name) || isPlausibleInvalidation(name, key)) {
-          queryCache.delete(key);
-          notifyQuery(key);
+      const keys = [...queryCache.keys()];
+      for (const key of keys) {
+        queryCache.delete(key);
+        notifyQuery(key);
+        const sep = key.indexOf("::");
+        const qName = sep === -1 ? key : key.slice(0, sep);
+        const argsJson = sep === -1 ? "[]" : key.slice(sep + 2);
+        let qArgs: unknown[] = [];
+        try {
+          qArgs = JSON.parse(argsJson) as unknown[];
+        } catch {
+          qArgs = [];
         }
-      }
-      // Always invalidate anything that touches the same noun.
-      const baseName = name.replace(/^(add|set|update|delete|remove|clear|toggle|sign|send)/i, "");
-      for (const key of queryCache.keys()) {
-        if (baseName && key.toLowerCase().includes(baseName.toLowerCase())) {
-          queryCache.delete(key);
-          notifyQuery(key);
-        }
+        void callRpc("query", qName, qArgs)
+          .then((v) => {
+            queryCache.set(key, { value: v, ts: Date.now(), error: null });
+            notifyQuery(key);
+          })
+          .catch((err) => {
+            queryCache.set(key, { value: undefined, ts: Date.now(), error: err });
+            notifyQuery(key);
+          });
       }
       return result;
     },
@@ -215,10 +245,6 @@ function stableStringify(value: unknown): string {
     }
     return v;
   });
-}
-
-function isPlausibleInvalidation(mutation: string, query: string): boolean {
-  return mutation.toLowerCase().includes(query.toLowerCase().split("::")[0]?.slice(0, -1) ?? "");
 }
 
 /* ------------------------------------------------------------------------ */

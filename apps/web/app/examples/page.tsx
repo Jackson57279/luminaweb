@@ -3,7 +3,7 @@ import { examplesBody } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Examples",
-  description: "Cookbook of Luminaweb capsules: todo, guestbook, chat, counter, webhook, blank.",
+  description: "Cookbook of Luminaweb capsules: live shadcn dashboard, todo, guestbook, chat, counter, webhook, blank.",
   alternates: { canonical: "/examples" },
 };
 

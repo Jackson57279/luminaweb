@@ -31,7 +31,6 @@ export {
   type LogEntry,
   type CapsuleHandlerOptions,
 } from "./handler.js";
-export { createSqliteDatabase } from "./sqlite.js";
 export { MemoryDatabase } from "./memory.js";
 export { resolveAuth, encodeSessionCookie, guestIdentity } from "./auth.js";
 export { createLogger } from "./log.js";

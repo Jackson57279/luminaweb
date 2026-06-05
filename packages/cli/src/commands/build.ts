@@ -12,8 +12,12 @@
  *     manifest.json
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const RUNTIME_EDGE = resolve(__dirname, "../../../runtime/src/server/edge.ts");
 import type { Ctx } from "../ctx.js";
 import { out } from "../utils.js";
 
@@ -49,6 +53,9 @@ export async function buildCommand(ctx: Ctx) {
     minify: true,
     sourcemap: "external",
     naming: "server.mjs",
+    alias: {
+      "luminaweb-runtime/server": RUNTIME_EDGE,
+    },
   });
   if (!serverResult.success) {
     out.err("server build failed:");
@@ -75,6 +82,15 @@ export async function buildCommand(ctx: Ctx) {
   const html = renderHtml();
   writeFileSync(join(outDir, "client/index.html"), html);
 
+  const cssCandidates = ["client/bundle.css", "client/styles.css"];
+  for (const rel of cssCandidates) {
+    const src = join(dir, rel);
+    if (existsSync(src)) {
+      copyFileSync(src, join(outDir, "client/bundle.css"));
+      break;
+    }
+  }
+
   const manifest = {
     name: readName(dir),
     target,
@@ -88,6 +104,7 @@ export async function buildCommand(ctx: Ctx) {
   out.plain("");
   out.plain(`  dist/server.mjs`);
   out.plain(`  dist/client/bundle.js`);
+  if (existsSync(join(outDir, "client/bundle.css"))) out.plain(`  dist/client/bundle.css`);
   out.plain(`  dist/client/index.html`);
   out.plain(`  dist/manifest.json`);
   out.plain("");

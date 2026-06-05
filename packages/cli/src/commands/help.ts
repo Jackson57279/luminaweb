@@ -18,7 +18,7 @@ export function helpCommand(ctx: Ctx) {
   }
   out.plain("");
   out.plain("  Examples:");
-  out.plain("    luminaweb new my-app --template todo");
+  out.plain("    luminaweb new my-app --template dashboard");
   out.plain("    cd my-app && luminaweb dev");
   out.plain("    luminaweb deploy");
   out.plain("");

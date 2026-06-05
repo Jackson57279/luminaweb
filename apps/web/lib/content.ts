@@ -482,6 +482,12 @@ export const examplesBody = `
         <p class="doc__lede">Each example is a complete capsule. Copy, edit, ship.</p>
       </header>
       <div class="examples__grid">
+        <a class="ex reveal reveal-d0" href="/d/dep_showcase" style="grid-column: 1 / -1; border-color: color-mix(in oklch, var(--accent) 35%, var(--border));">
+          <span class="ex__num">★</span>
+          <h3>shadcn dashboard (live)</h3>
+          <p>Full <code>dashboard-01</code> block — sidebar, metric cards, area chart, searchable table. Deployed on Luminaweb with live queries and mutations.</p>
+          <pre><code>luminaweb new my-app --template dashboard</code></pre>
+        </a>
         <a class="ex reveal reveal-d1" href="/examples/todo">
           <span class="ex__num">01</span>
           <h3>todo</h3>

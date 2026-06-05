@@ -1,0 +1,57 @@
+/**
+ * Server runtime entry for platform-hosted capsules (Next.js / Node).
+ * Excludes bun:sqlite so deploy bundles load without Bun.
+ */
+
+export type {
+  AuthIdentity,
+  FieldBuilder,
+  Logger,
+  Row,
+  ServerEnv,
+  TableBuilder,
+  Ctx,
+  Database,
+  TableOps,
+  QueryHandler,
+  MutationHandler,
+  QueryDef,
+  MutationDef,
+  EndpointRequest,
+  EndpointHandler,
+  EndpointDef,
+  Schema,
+  Queries,
+  Mutations,
+  Endpoints,
+  CapsuleDef,
+  AnyCapsule,
+  ResolvedCapsule,
+  ResponseInit,
+} from "./index.js";
+export {
+  table,
+  string,
+  boolean,
+  number,
+  text,
+  json,
+  isTable,
+  capsule,
+  query,
+  mutation,
+  endpoint,
+  createHandler,
+  MemoryDatabase,
+  resolveAuth,
+  encodeSessionCookie,
+  guestIdentity,
+  createLogger,
+  jsonResponse,
+  textResponse,
+  redirect,
+  notFound,
+  unauthorized,
+  badRequest,
+} from "./index.js";
+export type { LogEntry, CapsuleHandlerOptions } from "./handler.js";

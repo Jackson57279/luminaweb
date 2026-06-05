@@ -1,7 +1,13 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { Database } from "bun:sqlite";
-import { createHandler, createSqliteDatabase, type LogEntry } from "luminaweb-runtime/server";
+import {
+  createHandler,
+  MemoryDatabase,
+  type CapsuleDef,
+  type LogEntry,
+} from "luminaweb-runtime/server/edge";
 
 export type DeployRecord = {
   id: string;
@@ -74,8 +80,17 @@ export function verifyBearer(req: Request) {
   return { userId: row.user_id };
 }
 
-export function saveDeploy(input: { name: string; files: DistFile[]; ownerId: string | null; isPublic: boolean }) {
-  const id = `dep_${crypto.randomUUID().replaceAll("-", "").slice(0, 10)}`;
+export function saveDeploy(input: {
+  name: string;
+  files: DistFile[];
+  ownerId: string | null;
+  isPublic: boolean;
+  id?: string;
+}) {
+  const id =
+    input.id && /^dep_[a-z0-9_]+$/.test(input.id)
+      ? input.id
+      : `dep_${crypto.randomUUID().replaceAll("-", "").slice(0, 10)}`;
   const root = deployRoot(id);
   mkdirSync(root, { recursive: true });
   for (const file of input.files) {
@@ -111,6 +126,13 @@ export function getDeploy(id: string) {
     .get(id);
 }
 
+export function removeDeploy(id: string) {
+  const root = deployRoot(id);
+  if (existsSync(root)) rmSync(root, { recursive: true, force: true });
+  platformDb().query("delete from deploys where id = ?").run(id);
+  handlerCache.delete(id);
+}
+
 const handlerCache = new Map<string, { handler: (req: Request) => Promise<Response> | Response; logs: LogEntry[] }>();
 
 export async function serveDeploy(req: Request, id: string, rest: string) {
@@ -130,7 +152,11 @@ export async function serveDeploy(req: Request, id: string, rest: string) {
   if (localPath === "/" || localPath === "") {
     const html = readFileSync(join(root, "client", "index.html"), "utf-8")
       .replaceAll('src="/__zap__/', `src="${prefix}/__zap__/`)
-      .replaceAll('href="/__zap__/', `href="${prefix}/__zap__/`);
+      .replaceAll('href="/__zap__/', `href="${prefix}/__zap__/`)
+      .replace(
+        "</head>",
+        `<script>window.__LUMINAWEB_BASE__=${JSON.stringify(prefix)};</script></head>`,
+      );
     return new Response(html, { headers: { "content-type": "text/html; charset=utf-8" } });
   }
 
@@ -139,14 +165,24 @@ export async function serveDeploy(req: Request, id: string, rest: string) {
   return entry.handler(runtimeReq);
 }
 
+/** Load a user deploy bundle at runtime. Next/webpack must not rewrite this import. */
+async function importDeployModule(serverPath: string): Promise<{ default: CapsuleDef }> {
+  const href = pathToFileURL(serverPath).href;
+  // webpackIgnore keeps the native dynamic import in the production server bundle
+  return import(/* webpackIgnore: true */ href);
+}
+
 async function getDeployHandler(id: string, root: string, name: string) {
   const cached = handlerCache.get(id);
   if (cached) return cached;
   const serverPath = join(root, "server.mjs");
-  const mod = await import(`${serverPath}?v=${Date.now()}`);
-  const def = mod.default;
+  if (!existsSync(serverPath)) {
+    throw new Error(`deploy server bundle missing: ${serverPath}`);
+  }
+  const mod = await importDeployModule(serverPath);
+  const def: CapsuleDef = mod.default;
   const logs: LogEntry[] = [];
-  const database = createSqliteDatabase(join(root, "data.sqlite"), def.schema ?? {});
+  const database = new MemoryDatabase(def.schema ?? {});
   const handler = createHandler(def, {
     name,
     version: "0.1.0",
