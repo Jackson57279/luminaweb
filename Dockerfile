@@ -124,22 +124,6 @@ RUN printf '%s\n' \
     '  "version": "0.1.0"' \
     '}' > /repo/dist/manifest.json
 
-# shadcn dashboard showcase (seeded on platform startup)
-WORKDIR /repo/examples/dashboard
-RUN bun build ./server/index.ts --target=bun --outdir=/repo/showcase-dist --minify --sourcemap=external \
-      --alias.luminaweb-runtime/server=../../packages/runtime/src/server/edge.ts && \
-    mv /repo/showcase-dist/index.js /repo/showcase-dist/server.mjs
-RUN mkdir -p /repo/showcase-dist/client && \
-    bun build ./client/index.tsx --target=browser --outdir=/repo/showcase-dist/client --minify --sourcemap=external && \
-    mv /repo/showcase-dist/client/index.js /repo/showcase-dist/client/bundle.js
-RUN cp ./client/bundle.css /repo/showcase-dist/client/bundle.css && \
-    printf '%s\n' '{"name":"shadcn-dashboard","target":"edge","builtAt":"2026-06-04T00:00:00.000Z","runtime":"luminaweb-runtime","version":"0.1.0"}' > /repo/showcase-dist/manifest.json && \
-    printf '%s\n' \
-      '<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>' \
-      '<title>shadcn dashboard · Luminaweb</title><link rel="stylesheet" href="/__zap__/client.css"/></head>' \
-      '<body><div id="app"></div><script type="module" src="/__zap__/client.js"></script></body></html>' \
-      > /repo/showcase-dist/client/index.html
-
 # =====================================================================
 FROM oven/bun:${BUN_VERSION}-alpine AS runtime
 WORKDIR /app
@@ -172,13 +156,10 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV LUMINAWEB_DATA_DIR=/data
 
-COPY --from=build /repo/showcase-dist ./showcase-dist
-COPY apps/web/scripts ./scripts
-
 # Build the Next.js production bundle. The auth/platform/runtime code uses
 # bun:sqlite + Bun.* APIs, so the server is run with `bun --bun next`.
 RUN bun --bun next build
 
 RUN mkdir -p /data
 EXPOSE 3000
-CMD ["sh", "-c", "bun scripts/seed-showcase-deploy.ts && exec bun --bun next start --port ${PORT:-3000}"]
+CMD ["sh", "-c", "exec bun --bun next start --port ${PORT:-3000}"]

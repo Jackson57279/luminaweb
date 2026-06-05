@@ -1,0 +1,74 @@
+# syntax=docker/dockerfile:1.7
+# Standalone Luminaweb edge capsule — dashboard example (not the marketing site).
+
+ARG BUN_VERSION=1.3.13
+ARG CAPSULE_DIR=examples/dashboard
+ARG CAPSULE_NAME=shadcn-dashboard
+
+FROM oven/bun:${BUN_VERSION}-alpine AS deps
+WORKDIR /repo
+
+COPY package.json bunfig.toml* ./
+COPY apps/edge/package.json ./apps/edge/
+COPY packages/runtime/package.json ./packages/runtime/
+COPY packages/cli/package.json ./packages/cli/
+COPY examples/dashboard/package.json ./examples/dashboard/
+
+RUN bun install --frozen-lockfile || bun install
+
+FROM deps AS build
+WORKDIR /repo
+
+COPY tsconfig.json ./
+COPY packages/ ./packages/
+COPY apps/edge/ ./apps/edge/
+COPY examples/dashboard/ ./examples/dashboard/
+
+RUN bun build apps/edge/src/index.ts --target=bun --outdir=apps/edge/build --minify \
+      --external preact --external preact/hooks --external bun:sqlite \
+      --external node:fs --external node:path
+
+WORKDIR /repo/examples/dashboard
+
+RUN bun build ./server/index.ts --target=bun --outdir=/repo/dist --minify \
+      --alias.luminaweb-runtime/server=../../packages/runtime/src/server/edge.ts && \
+    mv /repo/dist/index.js /repo/dist/server.mjs
+
+RUN mkdir -p /repo/dist/client && \
+    bun build ./client/index.tsx --target=browser --outdir=/repo/dist/client --minify && \
+    mv /repo/dist/client/index.js /repo/dist/client/bundle.js && \
+    cp ./client/bundle.css /repo/dist/client/bundle.css
+
+RUN printf '%s\n' \
+    '<!doctype html><html lang="en"><head><meta charset="utf-8"/>' \
+    '<meta name="viewport" content="width=device-width,initial-scale=1"/>' \
+    '<title>shadcn dashboard · Luminaweb</title>' \
+    '<link rel="stylesheet" href="/__zap__/client.css"/></head>' \
+    '<body><div id="app"></div><script type="module" src="/__zap__/client.js"></script></body></html>' \
+    > /repo/dist/client/index.html
+
+RUN printf '%s\n' \
+    "{\"name\":\"${CAPSULE_NAME}\",\"target\":\"edge\",\"builtAt\":\"2026-06-04T00:00:00.000Z\",\"runtime\":\"luminaweb-runtime\",\"version\":\"0.1.0\"}" \
+    > /repo/dist/manifest.json
+
+FROM oven/bun:${BUN_VERSION}-alpine AS runtime
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV ZAPDEV_NAME=shadcn-dashboard
+ENV ZAPDEV_VERSION=0.1.0
+ENV ZAPDEV_DATA_DIR=/data
+ENV ZAPDEV_TRUST_PROXY_HEADERS=1
+
+COPY --from=build /repo/apps/edge/build ./build
+COPY --from=build /repo/dist ./dist
+COPY --from=build /repo/node_modules ./node_modules
+COPY --from=build /repo/packages/runtime/package.json ./node_modules/luminaweb-runtime/package.json
+
+RUN mkdir -p /data && chown -R bun:bun /data
+
+USER bun
+EXPOSE 3000
+
+CMD ["bun", "build/index.js"]
