@@ -1,0 +1,25 @@
+railway.dashboard.json
+  s_783d12cd8e93cf::t_49039fb4d07a4e 1-13
+apps/web/lib/content.ts
+  s_783d12cd8e93cf::t_92937f97fc4115 485,487-489
+Dockerfile.capsule
+  s_783d12cd8e93cf::t_e3d1ddc0bb21f3 1-74
+Dockerfile
+  s_783d12cd8e93cf::t_49e8d02c377288 165
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "b08ac03319e6f087d2e4bf99f92070eb3d48611a",
+  "prompts": {},
+  "sessions": {
+    "s_783d12cd8e93cf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "61f9709f-b525-4dda-9957-edda24f3ef55",
+        "model": "default"
+      },
+      "human_author": "Jackson57279 <otdoges@proton.me>"
+    }
+  }
+}
