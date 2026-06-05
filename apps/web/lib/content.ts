@@ -482,7 +482,7 @@ export const examplesBody = `
         <p class="doc__lede">Each example is a complete capsule. Copy, edit, ship.</p>
       </header>
       <div class="examples__grid">
-        <a class="ex reveal reveal-d0" href="https://dashboard.luminaweb.app" style="grid-column: 1 / -1; border-color: color-mix(in oklch, var(--accent) 35%, var(--border));">
+        <a class="ex reveal reveal-d0" href="https://dashboard-production-128f.up.railway.app" style="grid-column: 1 / -1; border-color: color-mix(in oklch, var(--accent) 35%, var(--border));">
           <span class="ex__num">★</span>
           <h3>shadcn dashboard (live edge)</h3>
           <p>Full <code>dashboard-01</code> capsule on the Luminaweb edge runtime — not the marketing site. Sidebar, metrics, chart, searchable table.</p>
